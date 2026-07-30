@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#090909">
+<title>Vibhansh — Showreel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@400;500;600;700;800&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+<script src="https://unpkg.com/split-type"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+
+<style>
+  :root {
+    --bg-dark: #090909;
+    --text-dark: #F4F4F5;
+    --text-muted-dark: #8c8c8c;
+    --border-dark: rgba(255,255,255,0.15);
+    
+    --bg-light: #EBEBEB;
+    --text-light: #090909;
+    --text-muted-light: #666666;
+    --border-light: rgba(0,0,0,0.15);
+
+    --font-h: 'Syne', sans-serif;
+    --font-b: 'Inter', sans-serif;
+    --font-i: 'Playfair Display', serif;
+
+    --bar-h: clamp(60px, 8vh, 100px);
+    
+    --space-xs: clamp(0.5rem, 0.8vw, 0.75rem);
+    --space-sm: clamp(0.75rem, 1.2vw, 1rem);
+    --space-md: clamp(1rem, 2vw, 1.5rem);
+    --space-lg: clamp(1.5rem, 3vw, 2.5rem);
+    --space-xl: clamp(2rem, 5vw, 4rem);
+    --space-2xl: clamp(3rem, 8vw, 6rem);
+    --space-3xl: clamp(4rem, 12vw, 10rem);
+  }
+
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  
+  ::selection { background: #F4F4F5; color: #090909; }
+  ::-moz-selection { background: #F4F4F5; color: #090909; }
+  body.light-mode ::selection { background: #090909; color: #EBEBEB; }
+  body.light-mode ::-moz-selection { background: #090909; color: #EBEBEB; }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: auto;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--bg-dark);
+    color: var(--text-dark);
+    font-family: var(--font-b);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    min-height: 100vh;
+    transition: background 0.8s cubic-bezier(0.16,1,0.3,1), color 0.8s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  /* Loader */
+  .loader {
+    position: fixed; inset: 0; z-index: 999;
+    background: var(--bg-dark);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 24px;
+  }
+  .loader-text {
+    font-family: var(--font-b); font-size: 12px; font-weight: 500;
+    letter-spacing: 0.2em; color: var(--text-muted-dark);
+    text-transform: uppercase;
+  }
+  .loader-bar {
+    width: 200px; height: 1px;
+    background: var(--border-dark);
+    position: relative; overflow: hidden;
+  }
+  .loader-bar::after {
+    content: ''; position: absolute; left: 0; top: 0;
+    height: 100%; width: 0%; background: var(--text-dark);
+    animation: load 1.8s cubic-bezier(0.7,0,0.3,1) forwards;
+  }
+  @keyframes load { to { width: 100% } }
+  .loader.done {
+    transform: translateY(-100%);
+    transition: transform 1.2s cubic-bezier(0.7,0,0.3,1);
+  }
+
+  /* Cursor */
+  .cursor {
+    position: fixed; top: 0; left: 0; width: 12px; height: 12px;
+    background: #fff; border-radius: 50%; pointer-events: none;
+    z-index: 9999; mix-blend-mode: difference;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s cubic-bezier(0.16,1,0.3,1), height 0.4s cubic-bezier(0.16,1,0.3,1);
+    display: none;
+  }
+  .cursor.hover {
+    width: 60px; height: 60px;
+    background: transparent; border: 1px solid rgba(255,255,255,0.5);
+  }
+  @media (pointer: fine){
+    .cursor { display: block; }
+    body, a, button { cursor: none !important; }
+  }
+
+  /* Progress & Noise */
+  .grain {
+    position: fixed; inset: 0; z-index: 50; pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Navigation Bars */
+  .bar {
+    position: fixed; left: 24px; right: 24px; height: var(--bar-h);
+    z-index: 40;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 clamp(16px, 3vw, 40px);
+    font-family: var(--font-b); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-dark);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background 0.8s ease, border-color 0.8s ease, color 0.8s ease;
+  }
+  .light-mode .bar {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--text-light);
+  }
+  .bar-top { top: 24px; }
+  .bar-bottom { bottom: 24px; }
+  .bar-label { display: flex; align-items: center; gap: 12px; }
+
+  .nav-menu { display: flex; gap: 32px; }
+  .nav-menu a {
+    color: inherit; text-decoration: none; position: relative; overflow: hidden;
+  }
+  .nav-menu a::after {
+    content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 1px;
+    background: currentColor; transform: translateX(-101%);
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  }
+  .nav-menu a:hover::after { transform: translateX(0); }
+
+  @media (max-width: 768px) {
+    .nav-menu { display: none; }
+    .bar { left: 16px; right: 16px; }
+  }
+  .nav-menu a {
+    color: inherit; text-decoration: none; position: relative; overflow: hidden;
+  }
+  .nav-menu a::after {
+    content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 1px;
+    background: currentColor; transform: translateX(-101%);
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  }
+  .nav-menu a:hover::after { transform: translateX(0); }
+
+  /* Scenes */
+  .scene {
+    position: relative;
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: calc(var(--bar-h) + var(--space-xl)) clamp(20px, 8vw, 140px);
+    overflow: hidden;
+  }
+
+  /* Typography Utilities */
+  .split-line { overflow: hidden; }
+  .split-line .word { transform: translateY(110%); }
+
+  /* Section 1 - Hero */
+  .hero-wrap {
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; position: relative; z-index: 1;
+    width: 100%;
+  }
+  .hero-label {
+    font-family: var(--font-b); font-size: 12px; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: var(--space-md); color: var(--text-muted-dark);
+  }
+  .hero-name { font-family: var(--font-h); font-weight: 500; font-size: clamp(2rem, 8vw, 8rem); line-height: 1; letter-spacing: -0.02em; margin-bottom: var(--space-md); text-transform: uppercase; word-wrap: break-word; overflow-wrap: break-word; text-align: left; max-width: 100%; }
+  .hero-sub {
+    font-family: var(--font-b); font-size: clamp(16px, 1.5vw, 20px);
+    color: var(--text-muted-dark); max-width: 500px; line-height: 1.5;
+    font-weight: 400; margin-bottom: var(--space-xl);
+  }
+  .hero-sub em { font-family: var(--font-i); font-style: italic; font-weight: 400; color: var(--text-dark); }
+
+  .hero-cta { display: flex; gap: 24px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; padding: 16px 32px; border: 1px solid rgba(255,255,255,0.1); border-radius: 30px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; background: transparent; color: #fff; cursor: pointer; position: relative; overflow: hidden; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); text-decoration: none; transform: translateZ(0); }
+    .btn:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.05); transform: translateY(-4px) scale(1.02); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+    .btn.primary { background: var(--accent); color: #000; border: none; }
+    .btn.primary:hover { background: #e6c547; color: #000; }
+  .btn-primary { background: var(--text-dark); color: var(--bg-dark); }
+  .btn-primary:hover { background: transparent; color: var(--text-dark); }
+  .btn-secondary { background: transparent; color: var(--text-dark); }
+  .btn-secondary:hover { background: var(--text-dark); color: var(--bg-dark); }
+
+  /* Section 2 - Identity (Light scene via body class) */
+  .s2-wrapper { max-width: 1200px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; gap: var(--space-md); }
+  .identity-label {
+    font-family: var(--font-b); font-size: 12px; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase; color: inherit;
+    opacity: 0.5;
+  }
+  .identity-name { font-family: var(--font-i); font-style: italic; font-weight: 400; font-size: clamp(2rem, 5vw, 6rem); line-height: 1.1; letter-spacing: -0.01em; color: inherit; padding-bottom: 20px; word-wrap: break-word; overflow-wrap: break-word; }
+  .identity-bio {
+    font-family: var(--font-b); font-size: clamp(18px, 2vw, 32px);
+    max-width: 800px; line-height: 1.4; color: inherit; margin-top: var(--space-lg);
+  }
+  .identity-bio em { font-family: var(--font-i); font-style: italic; font-weight: 400; }
+
+  /* Section 3 - Works */
+    .works-header { font-size: clamp(0.75rem, 1.5vw, 1rem); text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 2rem; color: inherit; opacity: 0.6; font-family: var(--font-b); }
+  .work-list { width: 100%; border-top: 1px solid var(--border-dark); }
+  .work-item {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    padding: clamp(16px, 2vw, 32px) 0;
+    border-bottom: 1px solid var(--border-dark);
+    text-decoration: none; color: inherit;
+    transition: padding 0.4s cubic-bezier(0.16,1,0.3,1);
+    position: relative; overflow: hidden;
+  }
+  
+  .work-item-left { display: flex; align-items: baseline; gap: clamp(16px, 3vw, 40px); flex: 1; min-width: 250px; }
+  .work-details { display: flex; flex-direction: column; gap: 8px; }
+  .work-desc { font-family: var(--font-b); font-size: clamp(12px, 1vw, 15px); color: rgba(255, 255, 255, 0.7); max-width: 500px; font-weight: 400; line-height: 1.4; transition: color 0.5s ease; }
+  .work-desc { color: rgba(17, 17, 17, 0.7); }
+  .work-details { transition: transform 0.5s cubic-bezier(0.19,1,0.22,1); }
+  /* Override older work-name hover logic so it applies to parent instead */
+
+  .work-idx {
+    font-family: var(--font-b); font-size: 14px; font-weight: 400;
+    color: var(--text-muted-dark);
+  }
+  .work-name { font-family: var(--font-h); font-weight: 500; font-size: clamp(1rem, 4vw, 2rem); letter-spacing: -0.01em; text-transform: uppercase; transition: color 0.3s ease, transform 0.5s cubic-bezier(0.19,1,0.22,1); word-wrap: break-word; overflow-wrap: break-word; }
+  .work-cat {
+    font-family: var(--font-b); font-size: clamp(12px, 1.2vw, 16px);
+    color: var(--text-muted-dark); font-weight: 400;
+  }
+  
+  @media (max-width: 768px){
+    .work-item { flex-direction: column; align-items: flex-start; gap: 12px; }
+  }
+
+  /* Section 4 - Contact */
+  .contact-wrapper {
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+  }
+  .contact-title { font-family: var(--font-i); font-style: italic; font-weight: 400; font-size: clamp(2.5rem, 7vw, 7rem); line-height: 1; letter-spacing: -0.01em; margin-bottom: var(--space-xl); text-transform: uppercase; word-wrap: break-word; overflow-wrap: break-word; }
+  .contact-links {
+    display: flex; gap: clamp(24px, 4vw, 60px); flex-wrap: wrap; justify-content: center;
+  }
+  .contact-link {
+    font-family: var(--font-b); font-size: clamp(18px, 2vw, 24px);
+    text-decoration: none; color: inherit; position: relative;
+    padding-bottom: 8px; font-weight: 500;
+  }
+  .contact-link::after {
+    content: ''; position: absolute; left: 0; bottom: 0; width: 100%; height: 1px;
+    background: currentColor; transform: scaleX(0); transform-origin: right;
+    transition: transform 0.6s cubic-bezier(0.19,1,0.22,1);
+  }
+  .contact-link:hover::after { transform: scaleX(1); transform-origin: left; }
+  
+  .contact-cta {
+    margin-top: var(--space-3xl); font-family: var(--font-i); font-style: italic;
+    font-size: clamp(18px, 2vw, 28px); color: var(--text-muted-dark);
+  }
+  .contact-cta em { font-family: var(--font-b); font-style: normal; color: var(--text-dark); }
+
+  
+  #webgl-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2; /* Behind everything */
+    pointer-events: none;
+  }
+  
+  /* Make sure body and main have transparent backgrounds so we can see the canvas */
+  body, main {
+    background: transparent !important;
+  }
+  
+  /* Adjust transition since background color will now be handled by WebGL */
+  body {
+    transition: color 0.8s ease;
+  }
+
+  /* --- Enhancements --- */
+  :root {
+    --accent: #ff4d00;
+  }
+  
+  /* Cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--text-dark);
+    mix-blend-mode: difference;
+    transition: width 0.3s ease, height 0.3s ease, background 0.3s ease, transform 0.1s linear;
+    z-index: 9999;
+    display: none;
+  }
+  @media (pointer: fine) {
+    .cursor { display: block; }
+    body, a, button { cursor: none !important; }
+  }
+  .cursor.hover {
+    width: 60px; height: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.5);
+    mix-blend-mode: normal;
+  }
+  .light-mode .cursor { background: var(--text-light); }
+  .light-mode .cursor.hover { background: rgba(0,0,0,0.1); border-color: rgba(0,0,0,0.5); }
+
+  /* Background transition */
+  body {
+    transition: background-color 1.2s ease-in-out, color 1.2s ease-in-out;
+  }
+  
+  /* Text Highlights & Accents */
+  em {
+    color: var(--accent) !important;
+    font-style: italic;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .btn-primary:hover {
+    background: #fff;
+    color: var(--bg-dark);
+    border-color: #fff;
+  }
+  .light-mode .btn-primary:hover {
+    background: var(--bg-dark);
+    color: #fff;
+  }
+
+  /* Work Item Hover Effects */
+  .work-item {
+    position: relative;
+    transition: padding 0.5s cubic-bezier(0.19,1,0.22,1), opacity 0.5s ease;
+    overflow: hidden;
+  }
+  
+
+  .work-name { font-family: var(--font-h); font-weight: 500; font-size: clamp(1rem, 4vw, 2rem); letter-spacing: -0.01em; text-transform: uppercase; transition: color 0.3s ease, transform 0.5s cubic-bezier(0.19,1,0.22,1); word-wrap: break-word; overflow-wrap: break-word; }
+
+  /* Hover Image Reveal */
+  
+  /* Initial state for SplitText words to add rotation */
+  .split-line {
+    overflow: hidden;
+    padding-bottom: 0.1em;
+  }
+  .word {
+    transform-origin: bottom center;
+  }
+
+
+  .hero-name { font-family: var(--font-h); font-weight: 500; font-size: clamp(2rem, 8vw, 8rem); line-height: 1; letter-spacing: -0.02em; margin-bottom: var(--space-md); text-transform: uppercase; word-wrap: break-word; overflow-wrap: break-word; text-align: left; max-width: 100%; }
+  .identity-name { font-family: var(--font-i); font-style: italic; font-weight: 400; font-size: clamp(2rem, 5vw, 6rem); line-height: 1.1; letter-spacing: -0.01em; color: inherit; padding-bottom: 20px; word-wrap: break-word; overflow-wrap: break-word; }
+  .contact-title { font-family: var(--font-i); font-style: italic; font-weight: 400; font-size: clamp(2.5rem, 7vw, 7rem); line-height: 1; letter-spacing: -0.01em; margin-bottom: var(--space-xl); text-transform: uppercase; word-wrap: break-word; overflow-wrap: break-word; }
+  
+  .hero-sub, .identity-bio {
+    font-size: clamp(1.2rem, 3vw, 2.5rem);
+    max-width: 80%;
+    margin-top: 2rem;
+    line-height: 1.4;
+  }
+  
+  .work-name { font-family: var(--font-h); font-weight: 500; font-size: clamp(1rem, 4vw, 2rem); letter-spacing: -0.01em; text-transform: uppercase; transition: color 0.3s ease, transform 0.5s cubic-bezier(0.19,1,0.22,1); word-wrap: break-word; overflow-wrap: break-word; }
+  
+  .work-item {
+    padding: 3rem 0;
+  }
+  
+    .works-header { font-size: clamp(0.75rem, 1.5vw, 1rem); text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 2rem; color: inherit; opacity: 0.6; font-family: var(--font-b); }
+  
+  .scene {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10vh 5vw;
+  }
+  
+  .hero-wrap, .s2-wrapper, .contact-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  
+  em {
+    font-size: 1.1em;
+  }
+
+</style>
+</head>
+<body>
+<canvas id="webgl-canvas"></canvas>
+
+
+<div class="loader" id="loader">
+  <div class="loader-bar"></div>
+  <div class="loader-text">Loading Experience</div>
+</div>
+
+<div class="cursor" id="cursor"></div>
+<div class="grain"></div>
+
+<div class="bar bar-top">
+  <div class="bar-label">VIBHANSH © 2025</div>
+  <div class="nav-menu">
+    <a href="#s1">Intro</a>
+    <a href="#s2">Identity</a>
+    <a href="#s3">Works</a>
+    <a href="#s4">Contact</a>
+  </div>
+</div>
+<div class="bar bar-bottom">
+  <div id="ind">SCENE 01</div>
+  <div id="loc">LOCATION</div>
+</div>
+
+<main>
+  <!-- S1: Dark -->
+  <section class="scene" id="s1" data-theme="dark" data-sc="SCENE 01">
+    <div class="hero-wrap">
+      <p class="hero-label anim-up">Now Screening</p>
+      <h1 class="hero-name anim-split">VIBHANSH</h1>
+      <p class="hero-sub anim-up">
+        Biotech-bound on paper. Most nights, it's 
+        <em>language models and sensor circuits</em> instead.
+      </p>
+      <div class="hero-cta anim-up">
+        <a href="#s3" class="btn btn-primary">View Work</a>
+        <a href="#s4" class="btn btn-secondary">Get in Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- S2: Light -->
+  <section class="scene" id="s2" data-theme="light" data-sc="SCENE 02">
+    <div class="s2-wrapper">
+      <p class="identity-label anim-up">Identity</p>
+      <h2 class="identity-name anim-split">MAKER.</h2>
+      <p class="identity-bio anim-split">
+        Studying life sciences by day. By night: fine-tuning language models, 
+        soldering sensor circuits, and shipping 
+        <em>tools most people wouldn't bother finishing</em>.
+      </p>
+    </div>
+  </section>
+
+  <!-- S3: Dark -->
+  <section class="scene" id="s3" data-theme="dark" data-sc="SCENE 03">
+    <p class="works-header anim-up">Selected Works</p>
+    <div class="work-list">
+      <a href="#" class="work-item" data-img="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1000&auto=format&fit=crop">
+        <div class="work-item-left">
+          <span class="work-idx">01</span>
+          <div class="work-details">
+            <h3 class="work-name">VEDA-8B-V1</h3>
+            <p class="work-desc">8B-parameter model, quantized to IQ4_XS and shipped on Hugging Face.</p>
+          </div>
+        </div>
+        <p class="work-cat">Model Training</p>
+      </a>
+      <a href="#" class="work-item" data-img="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1000&auto=format&fit=crop">
+        <div class="work-item-left">
+          <span class="work-idx">02</span>
+          <div class="work-details">
+            <h3 class="work-name">Marwari-Hindi LLM</h3>
+            <p class="work-desc">Gemma fine-tuned on Marwari-Rajasthani text with QLoRA, on free Kaggle T4s.</p>
+          </div>
+        </div>
+        <p class="work-cat">Regional AI</p>
+      </a>
+      <a href="#" class="work-item" data-img="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1000&auto=format&fit=crop">
+        <div class="work-item-left">
+          <span class="work-idx">03</span>
+          <div class="work-details">
+            <h3 class="work-name">Telegram AI Assistant</h3>
+            <p class="work-desc">Multi-provider fallback — Gemini to Groq to OpenRouter — with persistent memory.</p>
+          </div>
+        </div>
+        <p class="work-cat">Agent Systems</p>
+      </a>
+      <a href="#" class="work-item" data-img="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1000&auto=format&fit=crop">
+        <div class="work-item-left">
+          <span class="work-idx">04</span>
+          <div class="work-details">
+            <h3 class="work-name">MCP Lead Scraper</h3>
+            <p class="work-desc">An MCP server that finds and scores local business leads automatically.</p>
+          </div>
+        </div>
+        <p class="work-cat">Data Engine</p>
+      </a>
+      <a href="#" class="work-item" data-img="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=1000&auto=format&fit=crop">
+        <div class="work-item-left">
+          <span class="work-idx">05</span>
+          <div class="work-details">
+            <h3 class="work-name">Piezo Energy Bench</h3>
+            <p class="work-desc">Measures energy harvested from motion through an LTC3588 circuit.</p>
+          </div>
+        </div>
+        <p class="work-cat">Hardware</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- S4: Dark -->
+  <section class="scene" id="s4" data-theme="dark" data-sc="SCENE 04">
+    <div class="contact-wrapper">
+      <h2 class="contact-title anim-split">Find Me</h2>
+      <div class="contact-links anim-up">
+        <a href="https://www.instagram.com/vibhansh_04/" target="_blank" rel="noopener" class="contact-link">Instagram</a>
+        <a href="https://github.com/vibhansh19" target="_blank" rel="noopener" class="contact-link">Github</a>
+        <a href="https://discord.com/users/1447527365277384786" target="_blank" rel="noopener" class="contact-link">Discord</a>
+        <a href="mailto:vvibhansh@gmail.com" class="contact-link">Email</a>
+      </div>
+      <p class="contact-cta anim-up">
+        Open to collaborations, late-night debugging sessions, <br><em>and conversations about the future.</em>
+      </p>
+    </div>
+  </section>
+<div class="hover-image-reveal" id="hover-image"></div>
+</main>
+
+<script>
+(function(){
+  gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+  // Loader
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('loader').classList.add('done');
+      initHeroAnimations();
+    }, 800);
+  });
+
+  // Custom Cursor
+  const cur = document.getElementById('cursor');
+  let cx = window.innerWidth/2, cy = window.innerHeight/2, tx = cx, ty = cy;
+  if(window.matchMedia('(pointer: fine)').matches) {
+    document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+    const loop = () => {
+      cx += (tx-cx)*0.15; cy += (ty-cy)*0.15;
+      cur.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
+      requestAnimationFrame(loop);
+    };
+    loop();
+    document.querySelectorAll('a, button, .work-item').forEach(el => {
+      el.addEventListener('mouseenter', () => cur.classList.add('hover'));
+      el.addEventListener('mouseleave', () => cur.classList.remove('hover'));
+    });
+  }
+
+  // Time & Location
+  async function getLoc(){
+    try {
+      const res = await fetch('https://ipapi.co/json/');
+      if(!res.ok) throw new Error();
+      const d = await res.json();
+      return { city: d.city, country: d.country_code, tz: d.timezone };
+    } catch(e) {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      return { city: tz.split('/').pop().replace(/_/g,' '), tz: tz };
+    }
+  }
+  getLoc().then(loc => {
+    const el = document.getElementById('loc');
+    const tick = () => {
+      el.textContent = (loc.city || 'LOCAL') + ' · ' + new Intl.DateTimeFormat('en-GB',{
+        timeZone: loc.tz, hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false
+      }).format(new Date());
+    };
+    tick(); setInterval(tick, 1000);
+  });
+
+  // Text Splitting for Animations
+  const splits = document.querySelectorAll('.anim-split');
+  splits.forEach(el => {
+    new SplitType(el, { types: 'lines, words', lineClass: 'split-line', wordClass: 'word' });
+  });
+
+  
+  // Initialize Lenis for smooth scrolling
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+    direction: 'vertical',
+    gestureDirection: 'vertical',
+    smooth: true,
+    mouseMultiplier: 1,
+    smoothTouch: false,
+    touchMultiplier: 2,
+    infinite: false,
+  })
+
+  // get scroll value
+  let scrollY = 0;
+  lenis.on('scroll', (e) => {
+    scrollY = window.scrollY;
+  })
+
+  function raf(time) {
+    lenis.raf(time)
+    requestAnimationFrame(raf)
+  }
+
+  requestAnimationFrame(raf)
+
+  // Sync GSAP ScrollTrigger with Lenis
+  lenis.on('scroll', ScrollTrigger.update)
+
+  gsap.ticker.add((time)=>{
+    lenis.raf(time * 1000)
+  })
+
+  gsap.ticker.lagSmoothing(0)
+
+  // Three.js Background Implementation
+  const canvas = document.getElementById('webgl-canvas');
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+  // Custom Shader for Fluid/Wave background
+  const vertexShader = `
+    varying vec2 vUv;
+    void main() {
+      vUv = uv;
+      gl_Position = vec4(position, 1.0);
+    }
+  `;
+
+  const fragmentShader = `
+    uniform float uTime;
+    uniform vec2 uResolution;
+    uniform vec2 uMouse;
+    uniform float uScroll;
+    
+    // Theme colors
+    uniform vec3 uColor1;
+    uniform vec3 uColor2;
+    uniform vec3 uColor3;
+    
+    varying vec2 vUv;
+
+    // Simplex 2D noise
+    vec3 permute(vec3 x) { return mod(((x*34.0)+1.0)*x, 289.0); }
+    float snoise(vec2 v){
+      const vec4 C = vec4(0.211324865405187, 0.366025403784439,
+               -0.577350269189626, 0.024390243902439);
+      vec2 i  = floor(v + dot(v, C.yy) );
+      vec2 x0 = v -   i + dot(i, C.xx);
+      vec2 i1;
+      i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+      vec4 x12 = x0.xyxy + C.xxzz;
+      x12.xy -= i1;
+      i = mod(i, 289.0);
+      vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))
+      + i.x + vec3(0.0, i1.x, 1.0 ));
+      vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy),
+        dot(x12.zw,x12.zw)), 0.0);
+      m = m*m ;
+      m = m*m ;
+      vec3 x = 2.0 * fract(p * C.www) - 1.0;
+      vec3 h = abs(x) - 0.5;
+      vec3 ox = floor(x + 0.5);
+      vec3 a0 = x - ox;
+      m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+      vec3 g;
+      g.x  = a0.x  * x0.x  + h.x  * x0.y;
+      g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+      return 130.0 * dot(m, g);
+    }
+
+    void main() {
+      vec2 st = gl_FragCoord.xy/uResolution.xy;
+      st.x *= uResolution.x/uResolution.y;
+      
+      // Affect coordinates by mouse and scroll
+      vec2 pos = st;
+      pos.y += uScroll * 0.001;
+      
+      // Distortion based on noise
+      float n = snoise(pos * 3.0 + uTime * 0.2);
+      float n2 = snoise(pos * 2.0 - uTime * 0.15 + uMouse * 0.5);
+      float n3 = snoise(pos * 5.0 + uTime * 0.1 - uMouse * 0.2);
+      
+      float noiseVal = n * 0.5 + n2 * 0.3 + n3 * 0.2;
+      
+      // Mix colors based on noise
+      vec3 color = mix(uColor1, uColor2, smoothstep(-1.0, 1.0, noiseVal));
+      color = mix(color, uColor3, smoothstep(0.0, 1.0, n2));
+      
+      // Add subtle vignette
+      vec2 q = gl_FragCoord.xy / uResolution.xy;
+      float vignette = 1.0 - 0.5 * dot(q - 0.5, q - 0.5);
+      
+      gl_FragColor = vec4(color * vignette, 1.0);
+    }
+  `;
+
+  // Dark Theme Colors
+  const darkC1 = new THREE.Color("#090909");
+  const darkC2 = new THREE.Color("#1a1a1a");
+  const darkC3 = new THREE.Color("#331000"); // dark accent
+  
+  // Light Theme Colors
+  const lightC1 = new THREE.Color("#EBEBEB");
+  const lightC2 = new THREE.Color("#d1d1d1");
+  const lightC3 = new THREE.Color("#ffcca3"); // light accent
+
+  const uniforms = {
+    uTime: { value: 0 },
+    uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+    uMouse: { value: new THREE.Vector2(0, 0) },
+    uScroll: { value: 0 },
+    uColor1: { value: darkC1.clone() },
+    uColor2: { value: darkC2.clone() },
+    uColor3: { value: darkC3.clone() }
+  };
+
+  const material = new THREE.ShaderMaterial({
+    vertexShader,
+    fragmentShader,
+    uniforms
+  });
+
+  const geometry = new THREE.PlaneGeometry(2, 2);
+  const mesh = new THREE.Mesh(geometry, material);
+  scene.add(mesh);
+
+  // Mouse interaction for WebGL
+  let mouseX = 0;
+  let mouseY = 0;
+  let targetMouseX = 0;
+  let targetMouseY = 0;
+
+  window.addEventListener('mousemove', (e) => {
+    targetMouseX = (e.clientX / window.innerWidth) * 2 - 1;
+    targetMouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+  });
+
+  // Handle Resize
+  window.addEventListener('resize', () => {
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    uniforms.uResolution.value.set(window.innerWidth, window.innerHeight);
+  });
+
+  // Animation Loop
+  const clock = new THREE.Clock();
+  
+  function animateWebGL() {
+    const elapsedTime = clock.getElapsedTime();
+    uniforms.uTime.value = elapsedTime;
+    
+    // Smooth mouse interpolation
+    mouseX += (targetMouseX - mouseX) * 0.05;
+    mouseY += (targetMouseY - mouseY) * 0.05;
+    uniforms.uMouse.value.set(mouseX, mouseY);
+    
+    // Scroll interaction
+    uniforms.uScroll.value += (scrollY - uniforms.uScroll.value) * 0.1;
+    
+    renderer.render(scene, camera);
+    requestAnimationFrame(animateWebGL);
+  }
+  
+  animateWebGL();
+
+  // Animations Setup
+  
+
+
+  // Enhanced initial animation with rotation and opacity
+  function initHeroAnimations() {
+    const tl = gsap.timeline();
+    // Words come up from bottom with a slight rotation and opacity fade
+    tl.fromTo('#s1 .word', 
+        { y: 100, rotationZ: 10, opacity: 0 }, 
+        { y: 0, rotationZ: 0, opacity: 1, duration: 1.4, stagger: 0.04, ease: 'power4.out' }
+      )
+      .fromTo('#s1 .anim-up', 
+        { y: 40, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 1.2, stagger: 0.1, ease: 'power3.out' }, 
+        '-=1.0'
+      );
+  }
+
+
+  // Scroll Animations
+  const scenes = document.querySelectorAll('.scene');
+  scenes.forEach(scene => {
+    const theme = scene.dataset.theme;
+    
+    // Theme Switcher
+    ScrollTrigger.create({
+      trigger: scene,
+      start: "top 50%",
+      end: "bottom 50%",
+      onEnter: () => updateTheme(theme, scene),
+      onEnterBack: () => updateTheme(theme, scene)
+    });
+
+    
+    // Content Reveal (Enhanced)
+    if(scene.id !== 's1') {
+      const words = scene.querySelectorAll('.word');
+      if(words.length) {
+        gsap.fromTo(words, 
+          { y: 100, rotationZ: 8, opacity: 0 },
+          {
+            scrollTrigger: { trigger: scene, start: 'top 80%' },
+            y: 0, rotationZ: 0, opacity: 1, duration: 1.2, stagger: 0.03, ease: 'power4.out'
+          }
+        );
+      }
+      const ups = scene.querySelectorAll('.anim-up, .work-item');
+      if(ups.length) {
+        gsap.fromTo(ups, { y: 60, opacity: 0 }, {
+          scrollTrigger: { trigger: scene, start: 'top 85%' },
+          y: 0, opacity: 1, duration: 1.4, stagger: 0.1, ease: 'power4.out'
+        });
+      }
+    }
+
+  });
+
+  const body = document.body;
+  const ind = document.getElementById('ind');
+  function updateTheme(theme, scene) {
+    if(theme === 'light') {
+      body.classList.add('light-mode');
+      body.style.color = 'var(--text-light)';
+      
+      // Animate WebGL Colors to Light
+      gsap.to(uniforms.uColor1.value, { r: lightC1.r, g: lightC1.g, b: lightC1.b, duration: 1.5, ease: "power2.inOut" });
+      gsap.to(uniforms.uColor2.value, { r: lightC2.r, g: lightC2.g, b: lightC2.b, duration: 1.5, ease: "power2.inOut" });
+      gsap.to(uniforms.uColor3.value, { r: lightC3.r, g: lightC3.g, b: lightC3.b, duration: 1.5, ease: "power2.inOut" });
+      
+    } else {
+      body.classList.remove('light-mode');
+      body.style.color = 'var(--text-dark)';
+      
+      // Animate WebGL Colors to Dark
+      gsap.to(uniforms.uColor1.value, { r: darkC1.r, g: darkC1.g, b: darkC1.b, duration: 1.5, ease: "power2.inOut" });
+      gsap.to(uniforms.uColor2.value, { r: darkC2.r, g: darkC2.g, b: darkC2.b, duration: 1.5, ease: "power2.inOut" });
+      gsap.to(uniforms.uColor3.value, { r: darkC3.r, g: darkC3.g, b: darkC3.b, duration: 1.5, ease: "power2.inOut" });
+    }
+    ind.textContent = scene.dataset.sc;
+  }
+
+  // Smooth Scroll Links
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if(target) gsap.to(window, { duration: 1.2, scrollTo: { y: target, offsetY: 0 }, ease: 'power3.inOut' });
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
