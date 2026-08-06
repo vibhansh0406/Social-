@@ -1,367 +1,386 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#090909">
-  <meta name="description" content="Vibhansh Bamnia — AI/ML Engineer & Web Developer. Specializing in LLM fine-tuning, AI agents, and custom high-performance web applications.">
-  <meta name="keywords" content="Vibhansh, Vibhansh Bamnia, AI Engineer, ML Engineer, Web Developer, LLM fine-tuning, AI agents, React, Three.js, GSAP, WebGL">
-  <meta name="author" content="Vibhansh Bamnia">
-  
-  <title>Vibhansh | AI/ML & Web Development</title>
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://vibhansh.com/">
-  <meta property="og:title" content="Vibhansh | AI/ML & Web Development">
-  <meta property="og:description" content="AI/ML Engineer & Web Developer building intelligent systems and cinematic digital experiences.">
-  <meta property="og:image" content="https://vibhansh.com/og-image.jpg">
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vibhansh | AI Architect &amp; Web Developer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@500&amp;family=Inter:wght@400&amp;family=Syne:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary": "#490081",
+                    "surface-container": "#122131",
+                    "tertiary": "#ddb8ff",
+                    "surface-variant": "#273647",
+                    "surface-container-lowest": "#010f1f",
+                    "on-tertiary-container": "#985dd2",
+                    "secondary-fixed-dim": "#c3c0ff",
+                    "on-error-container": "#ffdad6",
+                    "on-secondary-fixed": "#0f0069",
+                    "on-primary": "#313030",
+                    "primary-fixed": "#e5e2e1",
+                    "on-primary-container": "#7b7979",
+                    "on-tertiary-fixed-variant": "#62259b",
+                    "surface": "#051424",
+                    "secondary": "#c3c0ff",
+                    "on-secondary-container": "#b3b1ff",
+                    "primary": "#c9c6c5",
+                    "on-surface": "#d4e4fa",
+                    "outline": "#8e9192",
+                    "background": "#051424",
+                    "inverse-primary": "#5f5e5e",
+                    "on-secondary-fixed-variant": "#3323cc",
+                    "surface-container-highest": "#273647",
+                    "surface-bright": "#2c3a4c",
+                    "inverse-surface": "#d4e4fa",
+                    "on-background": "#d4e4fa",
+                    "secondary-container": "#3626ce",
+                    "secondary-fixed": "#e2dfff",
+                    "error-container": "#93000a",
+                    "surface-dim": "#051424",
+                    "primary-fixed-dim": "#c9c6c5",
+                    "on-primary-fixed": "#1c1b1b",
+                    "surface-tint": "#c9c6c5",
+                    "error": "#ffb4ab",
+                    "tertiary-fixed": "#f0dbff",
+                    "outline-variant": "#444748",
+                    "tertiary-fixed-dim": "#ddb8ff",
+                    "on-surface-variant": "#c4c7c7",
+                    "on-tertiary-fixed": "#2c0051",
+                    "on-secondary": "#1d00a5",
+                    "on-primary-fixed-variant": "#474646",
+                    "surface-container-high": "#1c2b3c",
+                    "surface-container-low": "#0d1c2d",
+                    "primary-container": "#0a0a0a",
+                    "on-error": "#690005",
+                    "tertiary-container": "#140029",
+                    "inverse-on-surface": "#233143"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "section-gap": "8rem",
+                    "stack-md": "1.5rem",
+                    "gutter": "2rem",
+                    "container-max": "1280px",
+                    "stack-sm": "0.5rem"
+            },
+            "fontFamily": {
+                    "label-mono": [
+                            "Geist"
+                    ],
+                    "body-base": [
+                            "Inter"
+                    ],
+                    "headline-lg": [
+                            "Syne"
+                    ],
+                    "body-lg": [
+                            "Inter"
+                    ],
+                    "headline-lg-mobile": [
+                            "Syne"
+                    ],
+                    "display-xl": [
+                            "Syne"
+                    ]
+            },
+            "fontSize": {
+                    "label-mono": [
+                            "13px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.08em",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "body-base": [
+                            "16px",
+                            {
+                                    "lineHeight": "28px",
+                                    "letterSpacing": "0.01em",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "56px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "32px",
+                                    "letterSpacing": "0.01em",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-lg-mobile": [
+                            "36px",
+                            {
+                                    "lineHeight": "42px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "display-xl": [
+                            "84px",
+                            {
+                                    "lineHeight": "90px",
+                                    "letterSpacing": "-0.04em",
+                                    "fontWeight": "800"
+                            }
+                    ]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body {
+            background-color: #0a0a0a;
+            color: #d4e4fa;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-image: linear-gradient(to bottom right, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.02)) 1;
+        }
+        .glass-button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.2s ease-in-out;
+        }
+        .glass-button:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .primary-button {
+            background-color: #4f46e5;
+            color: white;
+            transition: all 0.2s ease-in-out;
+        }
+        .primary-button:hover {
+            background-color: #6366f1;
+            box-shadow: 0 0 15px rgba(79, 70, 229, 0.5);
+        }
+        .input-line {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            transition: border-color 0.3s ease;
+        }
+        .input-line:focus {
+            outline: none;
+            border-bottom-color: #4f46e5;
+            box-shadow: none;
+        }
+        .hero-bg-overlay {
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.2) 0%, rgba(10, 10, 10, 1) 100%);
+        }
 
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://vibhansh.com/">
-  <meta property="twitter:title" content="Vibhansh | AI/ML & Web Development">
-  <meta property="twitter:description" content="AI/ML Engineer & Web Developer building intelligent systems and cinematic digital experiences.">
-  <meta property="twitter:image" content="https://vibhansh.com/og-image.jpg">
-
-  <link rel="canonical" href="https://vibhansh.com/">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>V</text></svg>">
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@400;500;600;700;800&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
-  
-  <link rel="stylesheet" href="styles.css">
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org/",
-    "@type": "Person",
-    "name": "Vibhansh Bamnia",
-    "url": "https://vibhansh.com",
-    "image": "",
-    "sameAs": [
-      "https://github.com/vibhansh19",
-      "https://huggingface.co/vibhansh",
-      "https://www.instagram.com/vibhansh_04"
-    ],
-    "jobTitle": "AI/ML Engineer & Web Developer",
-    "worksFor": {
-      "@type": "Organization",
-      "name": "Veda AI Labs"
-    }
-  }
-  </script>
+        /* Subtle vignette for project images */
+        .project-thumbnail::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.8);
+            pointer-events: none;
+        }
+    </style>
 </head>
-<body class="dark-mode">
-  <div id="canvas-container" aria-hidden="true"></div>
-
-  <div class="cursor" aria-hidden="true"></div>
-
-  <nav class="nav">
-    <div class="nav-inner">
-      <a href="#" class="logo">VIBHANSH</a>
-      <div class="nav-links">
-        <a href="#services">Services</a>
-        <a href="#work">Work</a>
-        <a href="#about">About</a>
-        <a href="#contact" class="btn-primary-small">Let's Talk</a>
-      </div>
-    </div>
-  </nav>
-
-  <main>
-    <!-- S1: Hero -->
-    <section class="hero" id="hero">
-      <div class="hero-content">
-        <h1 class="hero-title" data-split>Building Intelligent Systems <br>& <span class="italic">Cinematic</span> Web Experiences.</h1>
-        <p class="hero-subtitle">Vibhansh Bamnia — Specializing in AI/ML engineering, LLM fine-tuning, and high-performance bespoke web development.</p>
-        <div class="hero-ctas">
-          <a href="#contact" class="btn btn-primary">Start a Project</a>
-          <a href="#work" class="btn btn-secondary">View Work</a>
-        </div>
-      </div>
-      <div class="scroll-indicator">
-        <span class="scroll-text">SCROLL</span>
-        <div class="scroll-line"></div>
-      </div>
-    </section>
-
-    <!-- S2: Services -->
-    <section class="services section-padding" id="services">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title" data-split>Expertise</h2>
-          <p class="section-desc">Dual specialization for end-to-end digital capabilities.</p>
-        </div>
-
-        <div class="services-grid">
-          <div class="service-col">
-            <h3 class="service-cat-title">AI & Machine Learning</h3>
-            <ul class="service-list">
-              <li>
-                <h4>LLM Fine-Tuning & Deployment</h4>
-                <p>Adapting open-source models for domain-specific reasoning and languages.</p>
-              </li>
-              <li>
-                <h4>Custom AI Agents & Chatbots</h4>
-                <p>Building intelligent, conversational interfaces with tool-calling capabilities.</p>
-              </li>
-              <li>
-                <h4>Automation & Data Tooling</h4>
-                <p>Developing robust pipelines for scraping, processing, and leveraging data.</p>
-              </li>
-            </ul>
-          </div>
-
-          <div class="service-col">
-            <h3 class="service-cat-title">Web Development</h3>
-            <ul class="service-list">
-              <li>
-                <h4>Bespoke Brand Experiences</h4>
-                <p>Crafting unique, cinematic, and interactive sites (like this one) without generic templates.</p>
-              </li>
-              <li>
-                <h4>High-Performance Architectures</h4>
-                <p>Optimized, accessible, and fast web applications built with modern tools.</p>
-              </li>
-              <li>
-                <h4>AI Integration</h4>
-                <p>Seamlessly bridging complex backend AI models with elegant frontend interfaces.</p>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-      <!-- Work Item 4 -->
-      <div class="work-item">
-        <div class="work-header">
-          <span class="work-meta">AI/ML • AUTOMATION</span>
-          <h3 class="work-title">MCP Lead Scraper</h3>
-        </div>
-        <p class="work-desc">An MCP server architecture designed to find, scrape, and score local business leads automatically. (Case Study: Streamlined lead generation via autonomous data pipelines).</p>
-        <div class="work-links">
-          <!-- TODO: add real link to repo when available -->
-        </div>
-      </div>
-
-      <!-- Work Item 5 -->
-      <div class="work-item">
-        <div class="work-header">
-          <span class="work-meta">HARDWARE • RESEARCH</span>
-          <h3 class="work-title">Piezo Energy Bench</h3>
-        </div>
-        <p class="work-desc">A hardware setup measuring energy harvested from motion through an LTC3588 circuit. (Case Study: Prototyping physical-to-digital energy harvesting systems).</p>
-        <div class="work-links">
-          <!-- TODO: add real link to research paper or repo when available -->
-        </div>
-      </div>
-
-      </div>
-    </section>
-
-    <!-- S3: About -->
-    <section class="about section-padding" id="about">
-      <div class="container">
-        <div class="about-grid">
-          <div class="about-text">
-            <h2 class="section-title" data-split>The Maker</h2>
-            <p class="lead">I build at the intersection of complex logic and compelling presentation.</p>
-            <p>As an independent engineer, I don't just wire up APIs or use pre-built themes. I fine-tune local models, write custom shaders, and architect solutions from the ground up.</p>
-            <p>Whether it's a quantized reasoning model running on edge devices or a smooth 60fps web experience, my focus is on delivering concrete outcomes and reliable, high-quality craft.</p>
-          </div>
-          <div class="about-stats">
-            <div class="stat-item">
-              <span class="stat-num">VEDA</span>
-              <span class="stat-label">AI Labs</span>
+<body class="font-body-base antialiased overflow-x-hidden selection:bg-secondary-container selection:text-white">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-transparent dark:bg-transparent backdrop-blur-md border-b border-white/10 flat no shadows">
+<div class="flex justify-between items-center px-8 py-6 max-w-container-max mx-auto">
+<div class="font-headline-lg text-body-lg font-bold tracking-tighter text-on-surface dark:text-on-surface">Vibhansh</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors hover:text-primary dark:hover:text-tertiary transition-all duration-300 font-label-mono text-label-mono uppercase tracking-widest scale-95 transition-transform duration-200" href="#services">Services</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors hover:text-primary dark:hover:text-tertiary transition-all duration-300 font-label-mono text-label-mono uppercase tracking-widest scale-95 transition-transform duration-200" href="#work">Work</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors hover:text-primary dark:hover:text-tertiary transition-all duration-300 font-label-mono text-label-mono uppercase tracking-widest scale-95 transition-transform duration-200" href="#process">Process</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors hover:text-primary dark:hover:text-tertiary transition-all duration-300 font-label-mono text-label-mono uppercase tracking-widest scale-95 transition-transform duration-200" href="#contact">Contact</a>
+</div>
+<a class="hidden md:inline-flex primary-button px-6 py-3 font-label-mono text-label-mono uppercase tracking-widest rounded" href="#contact">Start a Project</a>
+<button class="md:hidden text-on-surface">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden" id="hero">
+<!-- Background Image -->
+<div class="absolute inset-0 z-0">
+<img alt="Hero Background" class="w-full h-full object-cover object-center opacity-40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqhZeP7r2e12c-4OyDjz-FxIPjdqIPiiSP2BoNiVPkA2HZyLzxxyRqaUYHagAED7rOcNazglv6A2VkvG3dpoNnkdRzmzkibWr-T3_BJnBewP7KU5YDgBNttIjLHSpbdJBq3CNPgLMOEUjonVkbx9uB2N418DMSFq2YbnIfiDovOUeK5V1-yjM8JV2yvSgF_V8SOmxFl0DtiSCU2K83njhBPUmFdIkC-MLpOVc12ANCjUiDqo3DABroJnCFT0XIILFLmKnxrSu0cmQ"/>
+<div class="absolute inset-0 hero-bg-overlay z-10"></div>
+</div>
+<div class="relative z-20 text-center px-4 max-w-container-max mx-auto flex flex-col items-center">
+<p class="font-label-mono text-label-mono uppercase tracking-[0.3em] text-secondary-fixed mb-6 opacity-80">AI Architect + Web Developer</p>
+<h1 class="font-display-xl text-display-xl md:text-[120px] md:leading-[110px] text-on-surface mb-12 tracking-tighter drop-shadow-2xl">VIBHANSH</h1>
+<div class="flex gap-4">
+<a class="primary-button px-8 py-4 font-label-mono text-label-mono uppercase tracking-widest rounded-sm" href="#work">View Work</a>
+<a class="glass-button px-8 py-4 font-label-mono text-label-mono uppercase tracking-widest text-on-surface rounded-sm" href="#contact">Contact Me</a>
+</div>
+</div>
+</header>
+<!-- Services Section -->
+<section class="py-section-gap px-4 md:px-20 max-w-container-max mx-auto relative" id="services">
+<div class="mb-16 md:mb-24">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Capabilities.</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Service 1 -->
+<div class="glass-card p-8 rounded-lg group hover:-translate-y-2 transition-transform duration-300">
+<span class="material-symbols-outlined text-4xl text-tertiary mb-6 block group-hover:scale-110 transition-transform">memory</span>
+<h3 class="font-body-lg text-body-lg font-bold text-on-surface mb-4">Machine Learning</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed opacity-80">Predictive modeling, data pipelines, and intelligent algorithms.</p>
+</div>
+<!-- Service 2 -->
+<div class="glass-card p-8 rounded-lg group hover:-translate-y-2 transition-transform duration-300">
+<span class="material-symbols-outlined text-4xl text-secondary mb-6 block group-hover:scale-110 transition-transform">network_node</span>
+<h3 class="font-body-lg text-body-lg font-bold text-on-surface mb-4">Deep Learning</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed opacity-80">Neural networks, NLP, and computer vision architectures.</p>
+</div>
+<!-- Service 3 -->
+<div class="glass-card p-8 rounded-lg group hover:-translate-y-2 transition-transform duration-300">
+<span class="material-symbols-outlined text-4xl text-primary mb-6 block group-hover:scale-110 transition-transform">code_blocks</span>
+<h3 class="font-body-lg text-body-lg font-bold text-on-surface mb-4">Full-Stack Web</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed opacity-80">High-performance interfaces and robust backend systems.</p>
+</div>
+<!-- Service 4 -->
+<div class="glass-card p-8 rounded-lg group hover:-translate-y-2 transition-transform duration-300">
+<span class="material-symbols-outlined text-4xl text-on-tertiary-container mb-6 block group-hover:scale-110 transition-transform">architecture</span>
+<h3 class="font-body-lg text-body-lg font-bold text-on-surface mb-4">Scalable Architecture</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed opacity-80">Cloud infrastructure, microservices, and deployment strategies.</p>
+</div>
+</div>
+</section>
+<!-- Selected Work Section -->
+<section class="py-section-gap px-4 md:px-20 max-w-container-max mx-auto" id="work">
+<div class="mb-16 md:mb-24 flex justify-between items-end">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Selected Work.</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+<!-- Project 1 -->
+<div class="group cursor-pointer">
+<div class="relative w-full aspect-[4/3] rounded-lg overflow-hidden mb-6 project-thumbnail bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A highly detailed visualization of a massive neural network model, glowing deep purple and neon blue against a pitch-black void. The aesthetic is high-tech, cinematic, and deeply immersive, evoking a sense of immense computational power. Thin streams of light connect complex nodes, suggesting data flowing through an LLM architecture like VEDA-8B." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBM4jNwOuEZxCh1cdZXTo6wr-eAZpA01iTHE4zMjGHYE9EF1AMIapKfJ1HqJNdHkwn0UibziCsQKF1lwwWTlcjLM5fQw7Ponk4CcwNvtmN0zvSmHzDyLeV0gOWmiYzRffqrDbgWvYhpri6tDY9hNTLd3GEh7SHMlh92BJomGprbrcwiqEPoXQh084VNQklTMG9hiKNmYjZEUnfP8wqm54-b_TidYQadcsevZPLSJt3szFkgyhpmCC5t-fEh8KMfSlOrSymEMNmFgUs"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-body-lg text-body-lg font-bold text-on-surface mb-2 group-hover:text-tertiary transition-colors">VEDA-8B (LLM)</h3>
+<p class="font-label-mono text-label-mono text-on-surface-variant">AI / Model Architecture</p>
+</div>
+<span class="material-symbols-outlined text-on-surface opacity-0 group-hover:opacity-100 transition-opacity -translate-x-4 group-hover:translate-x-0 duration-300">arrow_forward</span>
+</div>
+</div>
+<!-- Project 2 -->
+<div class="group cursor-pointer md:mt-24">
+<div class="relative w-full aspect-[4/3] rounded-lg overflow-hidden mb-6 project-thumbnail bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A sleek, modern dashboard interface for a SaaS platform, floating in a dark, minimalist environment. The UI features high-contrast glassmorphic panels, subtle glowing charts in shades of cobalt blue and pristine white, and a fixed dark mode theme. The lighting is cinematic, highlighting the clean typography and sophisticated web architecture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA46qSK4Tr9lbpr81raGmF0PKM7zGMuNjMt92QrgXxCRMIwQRN1-eIix-nTDK2NqUeK9rEYeoA7k2EbgIWlQO_Mm71S0sP3NEGGaBGVpvJQ0l9P0cFknpIWVMHb6nbxccjhhRDLEUBjZ5N3YjoKvUKkQtZBYgv0x71uMOFy3NBYJOW2RmQeFiFTLvORVnvrm-MVYw3_9jsvZv_eu-L-7qul33mVubdwgyTzoac5Cu5roXNZKk2PNRNjOI5li2anyZ0CATJ5i8uwsU8"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-body-lg text-body-lg font-bold text-on-surface mb-2 group-hover:text-tertiary transition-colors">Modern SaaS Platform</h3>
+<p class="font-label-mono text-label-mono text-on-surface-variant">Web / Full-Stack</p>
+</div>
+<span class="material-symbols-outlined text-on-surface opacity-0 group-hover:opacity-100 transition-opacity -translate-x-4 group-hover:translate-x-0 duration-300">arrow_forward</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Process Section -->
+<section class="py-section-gap px-4 md:px-20 max-w-container-max mx-auto border-t border-white/5" id="process">
+<div class="mb-24 text-center">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Methodology.</h2>
+</div>
+<div class="relative max-w-4xl mx-auto">
+<!-- Timeline Line -->
+<div class="hidden md:block absolute top-1/2 left-0 w-full h-[1px] bg-white/10 -translate-y-1/2 z-0"></div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 relative z-10">
+<!-- Step 1 -->
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full bg-surface-container-lowest border border-white/20 flex items-center justify-center mb-8 font-label-mono text-tertiary">01</div>
+<h3 class="font-body-lg text-body-lg font-bold text-on-surface mb-4">Research &amp; Logic</h3>
+<p class="text-on-surface-variant text-sm">Defining constraints and mapping algorithmic pathways.</p>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full bg-surface-container-lowest border border-white/20 flex items-center justify-center mb-8 font-label-mono text-secondary">02</div>
+<h3 class="font-body-lg text-body-lg font-bold text-on-surface mb-4">Architecture &amp; Code</h3>
+<p class="text-on-surface-variant text-sm">Building robust systems and training models.</p>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full bg-surface-container-lowest border border-white/20 flex items-center justify-center mb-8 font-label-mono text-primary">03</div>
+<h3 class="font-body-lg text-body-lg font-bold text-on-surface mb-4">Deployment &amp; Intelligence</h3>
+<p class="text-on-surface-variant text-sm">Scaling infrastructure and ensuring seamless integration.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact Section -->
+<section class="py-section-gap px-4 md:px-20 max-w-container-max mx-auto" id="contact">
+<div class="max-w-2xl mx-auto glass-card p-8 md:p-16 rounded-xl">
+<div class="mb-12 text-center">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4">Initiate.</h2>
+<p class="text-on-surface-variant">Ready to build the next generation of intelligent systems?</p>
+</div>
+<form class="space-y-8">
+<div>
+<input class="w-full input-line py-3 text-on-surface bg-transparent font-label-mono text-label-mono placeholder:text-white/30" id="name" placeholder="Name" type="text"/>
+</div>
+<div>
+<input class="w-full input-line py-3 text-on-surface bg-transparent font-label-mono text-label-mono placeholder:text-white/30" id="email" placeholder="Email" type="email"/>
+</div>
+<div>
+<textarea class="w-full input-line py-3 text-on-surface bg-transparent font-label-mono text-label-mono placeholder:text-white/30 resize-none" id="message" placeholder="Message" rows="4"></textarea>
+</div>
+<div class="pt-4 text-center">
+<button class="primary-button w-full md:w-auto px-12 py-4 font-label-mono text-label-mono uppercase tracking-widest rounded-sm" type="button">Transmit Message</button>
+</div>
+</form>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full py-12 border-t border-white/5 flat bg-surface-container-lowest dark:bg-surface-container-lowest">
+<div class="flex flex-col md:flex-row justify-between items-center px-8 gap-stack-md max-w-container-max mx-auto">
+<div class="font-headline-lg text-body-base font-bold text-on-surface">Vibhansh</div>
+<div class="flex gap-6 font-label-mono text-label-mono text-on-surface-variant">
+<a class="hover:text-tertiary transition-colors opacity-80 hover:opacity-100 transition-opacity" href="#">LinkedIn</a>
+<a class="hover:text-tertiary transition-colors opacity-80 hover:opacity-100 transition-opacity" href="#">GitHub</a>
+<a class="hover:text-tertiary transition-colors opacity-80 hover:opacity-100 transition-opacity" href="#">Twitter</a>
+<a class="hover:text-tertiary transition-colors opacity-80 hover:opacity-100 transition-opacity" href="#">Mail</a>
+</div>
+<div class="font-label-mono text-label-mono text-primary dark:text-primary opacity-60">
+                © 2024 Vibhansh. Precision in Code &amp; Intelligence.
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- S4: Selected Work -->
-    <section class="work section-padding" id="work">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title" data-split>Selected Work</h2>
-        </div>
-
-        <div class="work-list">
-          <!-- Work Item 1 -->
-          <article class="work-item">
-            <div class="work-content">
-              <span class="work-meta">AI/ML • Flagship</span>
-              <h3 class="work-title">VEDA-8B-v1-Cognitive</h3>
-              <p class="work-desc">A LoRA fine-tuned reasoning model based on Llama-3-8B. Optimized for cognitive tasks and published with GGUF quantizations for efficient deployment.</p>
-              <div class="work-links">
-                <a href="https://huggingface.co/spaces/vibhansh/Veda-Chat" target="_blank" rel="noopener noreferrer" class="work-link">Try Live Demo</a>
-                <a href="https://huggingface.co/vibhansh/Veda-8B-v1-Cognitive" target="_blank" rel="noopener noreferrer" class="work-link secondary">Model Card</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Work Item 2 -->
-          <article class="work-item">
-            <div class="work-content">
-              <span class="work-meta">Web Development</span>
-              <h3 class="work-title">Vibhansh.com (This Site)</h3>
-              <p class="work-desc">A demonstration of bespoke web engineering. Built without heavy frameworks — utilizing raw HTML/CSS/JS, WebGL (Three.js) for shaders, GSAP for kinetic typography, and a custom serverless backend for secure contact routing. Designed for 90+ Lighthouse performance while maintaining a cinematic feel.</p>
-              <div class="work-links">
-                <a href="https://github.com/vibhansh19/Social-" target="_blank" rel="noopener noreferrer" class="work-link secondary">View Source</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Work Item 3 -->
-          <article class="work-item">
-            <div class="work-content">
-              <span class="work-meta">AI/ML • Regional AI</span>
-              <h3 class="work-title">Marwari-Hindi LLM</h3>
-              <p class="work-desc">Gemma fine-tuned on Marwari-Rajasthani text with QLoRA. Addressed the lack of regional language support in major models.</p>
-              <div class="work-links">
-                <span class="work-status">Case Study</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Work Item 4 -->
-          <article class="work-item">
-            <div class="work-content">
-              <span class="work-meta">AI/ML • Automation</span>
-              <h3 class="work-title">Telegram AI Assistant</h3>
-              <p class="work-desc">A persistent-memory chatbot utilizing multi-provider fallbacks (Gemini to Groq to OpenRouter) to ensure high availability and intelligent interactions.</p>
-              <div class="work-links">
-                <a href="https://github.com/vibhansh19/dogeBot" target="_blank" rel="noopener noreferrer" class="work-link secondary">View Repo</a>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- S5: Process -->
-    <section class="process section-padding" id="process">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title" data-split>Process</h2>
-          <p class="section-desc">How we turn concepts into production-ready reality.</p>
-        </div>
-
-        <div class="process-steps">
-          <div class="process-step">
-            <div class="step-num">01</div>
-            <h3 class="step-title">Discovery</h3>
-            <p>We align on your goals, target audience, and the technical constraints. Identifying exactly what problem needs solving.</p>
-          </div>
-          <div class="process-step">
-            <div class="step-num">02</div>
-            <h3 class="step-title">Scope & Proposal</h3>
-            <p>Clear deliverables, timeline, and architecture planning. No surprises, just a solid roadmap forward.</p>
-          </div>
-          <div class="process-step">
-            <div class="step-num">03</div>
-            <h3 class="step-title">Build</h3>
-            <p>Iterative development with regular updates. You see the progress as the system or experience comes to life.</p>
-          </div>
-          <div class="process-step">
-            <div class="step-num">04</div>
-            <h3 class="step-title">Launch & Handoff</h3>
-            <p>Rigorous testing, deployment, and providing documentation or training to ensure you fully own the outcome.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- S6: Testimonials -->
-    <section class="testimonials section-padding" id="testimonials">
-      <div class="container">
-        <!-- TODO: add real testimonial when available -->
-        <!-- <div class="testimonial-block">
-          <p class="quote">"Vibhansh delivered exceptional work..."</p>
-          <p class="author">- Client Name</p>
-        </div> -->
-      </div>
-    </section>
-
-    <!-- S7: Contact -->
-    <section class="contact section-padding" id="contact">
-      <div class="container">
-        <div class="contact-grid">
-          <div class="contact-info">
-            <h2 class="section-title" data-split>Let's work together.</h2>
-            <p class="lead">Currently available for new projects. Reach out to discuss how we can build something impactful.</p>
-
-            <div class="contact-methods">
-              <a href="mailto:vvibhansh@gmail.com" class="contact-method">vvibhansh@gmail.com</a>
-              <a href="https://github.com/vibhansh19" target="_blank" rel="noopener noreferrer" class="contact-method">GitHub</a>
-              <a href="https://www.instagram.com/vibhansh_04" target="_blank" rel="noopener noreferrer" class="contact-method">Instagram</a>
-              <p class="contact-note">For collaborators: Discord ID available upon request.</p>
-            </div>
-          </div>
-
-          <div class="contact-form-wrapper">
-            <form id="contactForm" class="contact-form" action="/api/contact" method="POST">
-              <!-- Honeypot -->
-              <input type="text" name="bot_field" id="bot_field" style="display:none" tabindex="-1" autocomplete="off">
-
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" required placeholder="Your Name">
-              </div>
-
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required placeholder="your@email.com">
-              </div>
-
-              <div class="form-group">
-                <label for="type">Project Type</label>
-                <select id="type" name="type" required>
-                  <option value="" disabled selected>Select a project type</option>
-                  <option value="ai">AI/ML Engineering</option>
-                  <option value="web">Web Development</option>
-                  <option value="both">Both / Other</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="message">Message</label>
-                <textarea id="message" name="message" required rows="4" placeholder="Tell me about your project..."></textarea>
-              </div>
-
-              <button type="submit" class="btn btn-primary btn-submit">
-                <span class="btn-text">Send Message</span>
-                <span class="btn-loading">Sending...</span>
-              </button>
-
-              <div class="form-status" id="formStatus" aria-live="polite"></div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer-inner">
-      <div class="footer-left">
-        <p>&copy; <span id="year"></span> Vibhansh Bamnia.</p>
-        <p class="availability">Currently available for new projects.</p>
-      </div>
-      <div class="footer-right">
-        <a href="#hero" class="back-to-top">Back to top ↑</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Scripts: Deferred -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous" defer></script>
-  <script src="https://unpkg.com/split-type@0.3.3/umd/index.min.js" integrity="sha384-EGEJUW/jVY9D2Tjw1nsJVJ1FobUVvaCMrTMUY4wtbohMa/NP2ZyJ+G5/s8mTz/E9" crossorigin="anonymous" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu" crossorigin="anonymous" defer></script>
-  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js" integrity="sha384-Ix9rC/2qxGBStYTwgeDWr4XGn5DSAU7LLElPvVLA3kAg1dt0zm09KjBX1OcDDUqz" crossorigin="anonymous" defer></script>
-  
-  <script src="script.js" defer></script>
-</body>
-</html>
+</div>
+</footer>
+<script>
+        // Simple ambient subtle movement for the hero background if needed
+        document.addEventListener('mousemove', (e) => {
+            const heroBg = document.querySelector('#hero img');
+            if(heroBg) {
+                const x = (e.clientX / window.innerWidth - 0.5) * 20;
+                const y = (e.clientY / window.innerHeight - 0.5) * 20;
+                heroBg.style.transform = `translate(${x}px, ${y}px) scale(1.05)`;
+            }
+        });
+    </script>
+</body></html>
