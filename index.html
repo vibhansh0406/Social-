@@ -341,18 +341,18 @@
 <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4">Initiate.</h2>
 <p class="text-on-surface-variant">Ready to build the next generation of intelligent systems?</p>
 </div>
-<form class="space-y-8">
+<form class="space-y-8" action="/api/contact" method="POST">
 <div>
-<input class="w-full input-line py-3 text-on-surface bg-transparent font-label-mono text-label-mono placeholder:text-white/30" id="name" placeholder="Name" type="text"/>
+<input class="w-full input-line py-3 text-on-surface bg-transparent font-label-mono text-label-mono placeholder:text-white/30" id="name" name="name" placeholder="Name" type="text" required/>
 </div>
 <div>
-<input class="w-full input-line py-3 text-on-surface bg-transparent font-label-mono text-label-mono placeholder:text-white/30" id="email" placeholder="Email" type="email"/>
+<input class="w-full input-line py-3 text-on-surface bg-transparent font-label-mono text-label-mono placeholder:text-white/30" id="email" name="email" placeholder="Email" type="email" required/>
 </div>
 <div>
-<textarea class="w-full input-line py-3 text-on-surface bg-transparent font-label-mono text-label-mono placeholder:text-white/30 resize-none" id="message" placeholder="Message" rows="4"></textarea>
+<textarea class="w-full input-line py-3 text-on-surface bg-transparent font-label-mono text-label-mono placeholder:text-white/30 resize-none" id="message" name="message" placeholder="Message" rows="4" required></textarea>
 </div>
 <div class="pt-4 text-center">
-<button class="primary-button w-full md:w-auto px-12 py-4 font-label-mono text-label-mono uppercase tracking-widest rounded-sm" type="button">Transmit Message</button>
+<button class="primary-button w-full md:w-auto px-12 py-4 font-label-mono text-label-mono uppercase tracking-widest rounded-sm" type="submit">Transmit Message</button>
 </div>
 </form>
 </div>
