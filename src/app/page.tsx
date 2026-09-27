@@ -25,13 +25,13 @@ export default function Home() {
           }
         >
           <div className="max-w-2xl">
-            <p className="mb-4 text-xs uppercase tracking-[0.3em] text-neutral-800">
+            <p className="mb-4 text-xs uppercase tracking-[0.3em] text-white/80">
               AI / ML — Full-Stack — Architecture
             </p>
-            <h2 className="mb-6 font-serif text-4xl leading-tight tracking-tight md:text-6xl text-neutral-900">
+            <h2 className="mb-6 font-serif text-4xl leading-tight tracking-tight md:text-6xl text-white">
               Engineering the next generation of intelligent systems.
             </h2>
-            <p className="max-w-xl text-base leading-relaxed text-neutral-700">
+            <p className="max-w-xl text-base leading-relaxed text-white/70">
               From VEDA-8B language models to scalable SaaS platforms — research,
               architecture and deployment under one roof. Scroll onward for
               capabilities, selected work and methodology.
