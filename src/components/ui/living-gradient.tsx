@@ -26,15 +26,17 @@ export default function LivingGradient({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <div ref={ref} className="relative bg-[#f5efe6]">
+    <div ref={ref} className="relative">
       <style>{`
         @keyframes lg-drift {
           0%, 100% { translate: 0% 0%; scale: 1; }
           50% { translate: 3% -4%; scale: 1.08; }
         }
       `}</style>
-      {/* Gradient blobs - fixed position so they stay visible */}
-      <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
+      {/* Base cream color */}
+      <div className="fixed inset-0 -z-20 bg-[#f5efe6]" />
+      {/* Animated gradient blobs */}
+      <div className="fixed inset-0 -z-10 pointer-events-none">
         <div className="absolute -left-[15%] top-[10%] h-[80vh] w-[85vw] rounded-full blur-3xl"
           style={{ background: "radial-gradient(circle at 40% 40%, #b7d3f4 0%, rgba(183,211,244,0) 65%)", transform: "translate3d(0, calc(var(--sy, 0) * -0.05px), 0)", animation: "lg-drift 18s ease-in-out infinite" }} />
         <div className="absolute -right-[20%] -top-[15%] h-[85vh] w-[90vw] rounded-full blur-3xl"
