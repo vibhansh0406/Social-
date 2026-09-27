@@ -9,21 +9,18 @@ export function useGyroscope() {
   const currentRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
     const isApple = /iPad|iPhone|iPod/.test(navigator.userAgent);
     setIsIOS(isApple);
-    
-    if (!isApple) {
-      setPermissionGranted(true);
-    }
+    if (!isApple) setPermissionGranted(true);
   }, []);
 
   useEffect(() => {
-    if (!permissionGranted) return;
+    if (!permissionGranted || typeof window === 'undefined') return;
 
     const handleOrientation = (event: DeviceOrientationEvent) => {
-      const x = event.gamma || 0;
-      const y = event.beta || 0;
-      targetRef.current = { x, y };
+      if (event.gamma !== null) targetRef.current.x = event.gamma;
+      if (event.beta !== null) targetRef.current.y = event.beta;
     };
 
     window.addEventListener('deviceorientation', handleOrientation, { passive: true });
@@ -35,7 +32,7 @@ export function useGyroscope() {
     const animate = () => {
       currentRef.current.x += (targetRef.current.x - currentRef.current.x) * 0.08;
       currentRef.current.y += (targetRef.current.y - currentRef.current.y) * 0.08;
-      setOrientation({ ...currentRef.current });
+      setOrientation({ x: currentRef.current.x, y: currentRef.current.y });
       raf = requestAnimationFrame(animate);
     };
     raf = requestAnimationFrame(animate);
@@ -47,13 +44,9 @@ export function useGyroscope() {
       const DeviceOrientationEventAny = DeviceOrientationEvent as any;
       if (typeof DeviceOrientationEventAny.requestPermission === 'function') {
         const response = await DeviceOrientationEventAny.requestPermission();
-        if (response === 'granted') {
-          setPermissionGranted(true);
-        }
+        if (response === 'granted') setPermissionGranted(true);
       }
-    } catch (e) {
-      console.error(e);
-    }
+    } catch (e) { console.error(e); }
   };
 
   return { orientation, isIOS, permissionGranted, requestPermission };

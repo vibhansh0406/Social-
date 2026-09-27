@@ -26,62 +26,92 @@ export default function LivingGradient({ children }: { children: React.ReactNode
     };
   }, []);
 
-  const tiltX = orientation.x * 2;
-  const tiltY = orientation.y * 2;
+  const tiltX = orientation.x * 3;
+  const tiltY = orientation.y * 3;
 
   return (
     <div ref={ref} className="relative min-h-screen">
       
-      {/* === BACKGROUND LAYER (z-0) === */}
-      <div className="fixed inset-0 z-0 overflow-hidden">
-        {/* 1. Base Cream Color */}
-        <div className="absolute inset-0 bg-[#f5efe6]" />
+      {/* BACKGROUND LAYER */}
+      <div 
+        className="fixed inset-0 overflow-hidden"
+        style={{ zIndex: 0 }}
+      >
+        {/* Cream Base */}
+        <div className="absolute inset-0" style={{ backgroundColor: '#f5efe6' }} />
 
-        {/* 2. Animated Blobs with Gyroscope Tilt */}
+        {/* Blobs Wrapper (Moves with Gyroscope) */}
         <div 
           className="absolute inset-0"
           style={{ 
             transform: `translate3d(${tiltX}px, ${tiltY}px, 0)`,
-            transition: "transform 0.15s ease-out",
+            transition: "transform 0.2s ease-out",
             willChange: "transform"
           }}
         >
+          {/* Blue Blob */}
           <div 
-            className="absolute top-[-10%] left-[-10%] w-[60vw] h-[60vw] rounded-full blur-[100px] opacity-70 animate-blob"
-            style={{ background: "radial-gradient(circle, #b7d3f4 0%, rgba(183,211,244,0) 70%)" }} 
+            className="absolute"
+            style={{ 
+              top: '-20%', left: '-20%', width: '80vw', height: '80vw',
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, #93c5fd 0%, rgba(147,197,253,0) 70%)',
+              filter: 'blur(80px)',
+              opacity: 0.8,
+              animation: 'blob 12s infinite ease-in-out'
+            }} 
           />
+          {/* Peach Blob */}
           <div 
-            className="absolute top-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full blur-[100px] opacity-70 animate-blob animation-delay-2000"
-            style={{ background: "radial-gradient(circle, #f3cfb2 0%, rgba(243,207,178,0) 70%)" }} 
+            className="absolute"
+            style={{ 
+              top: '-10%', right: '-20%', width: '70vw', height: '70vw',
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, #fdba74 0%, rgba(253,186,116,0) 70%)',
+              filter: 'blur(80px)',
+              opacity: 0.8,
+              animation: 'blob 15s infinite ease-in-out reverse'
+            }} 
           />
+          {/* Pink/Orange Blob */}
           <div 
-            className="absolute bottom-[-20%] left-[20%] w-[70vw] h-[70vw] rounded-full blur-[120px] opacity-60 animate-blob animation-delay-4000"
-            style={{ background: "radial-gradient(circle, #eec4a4 0%, rgba(238,196,164,0) 70%)" }} 
+            className="absolute"
+            style={{ 
+              bottom: '-20%', left: '10%', width: '90vw', height: '90vw',
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, #fca5a5 0%, rgba(252,165,165,0) 70%)',
+              filter: 'blur(100px)',
+              opacity: 0.7,
+              animation: 'blob 18s infinite ease-in-out'
+            }} 
           />
         </div>
 
-        {/* 3. Noise Texture */}
+        {/* Noise Texture */}
         <div 
-          className="absolute inset-0 opacity-[0.03] mix-blend-multiply"
-          style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E')" }} 
+          className="absolute inset-0 mix-blend-multiply"
+          style={{ 
+            opacity: 0.04,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
+          }} 
         />
       </div>
 
-      {/* === CONTENT LAYER (z-10) === */}
-      <div className="relative z-10">
+      {/* CONTENT LAYER */}
+      <div className="relative" style={{ zIndex: 10 }}>
         {children}
       </div>
 
-      {/* === iOS PERMISSION BUTTON === */}
+      {/* iOS PERMISSION BUTTON */}
       {isIOS && !permissionGranted && (
         <button
           onClick={requestPermission}
-          className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-full bg-neutral-900 text-white text-sm font-medium shadow-lg hover:bg-neutral-700 transition-colors"
+          className="fixed bottom-24 left-1/2 -translate-x-1/2 px-6 py-3 rounded-full bg-neutral-900 text-white text-sm font-medium shadow-lg"
+          style={{ zIndex: 50 }}
         >
           Enable Motion Effects
         </button>
       )}
-
     </div>
   );
 }
