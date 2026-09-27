@@ -26,8 +26,8 @@ export default function LivingGradient({ children }: { children: React.ReactNode
     };
   }, []);
 
-  const tiltX = orientation.x * 3;
-  const tiltY = orientation.y * 3;
+  const tiltX = orientation.x * 1.5;
+  const tiltY = orientation.y * 1.5;
 
   return (
     <div ref={ref} className="relative min-h-screen">

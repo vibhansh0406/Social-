@@ -5,6 +5,7 @@ export function useGyroscope() {
   const [orientation, setOrientation] = useState({ x: 0, y: 0 });
   const [isIOS, setIsIOS] = useState(false);
   const [permissionGranted, setPermissionGranted] = useState(false);
+  
   const targetRef = useRef({ x: 0, y: 0 });
   const currentRef = useRef({ x: 0, y: 0 });
 
@@ -30,9 +31,22 @@ export function useGyroscope() {
   useEffect(() => {
     let raf: number;
     const animate = () => {
-      currentRef.current.x += (targetRef.current.x - currentRef.current.x) * 0.08;
-      currentRef.current.y += (targetRef.current.y - currentRef.current.y) * 0.08;
-      setOrientation({ x: currentRef.current.x, y: currentRef.current.y });
+      const targetX = targetRef.current.x;
+      const targetY = targetRef.current.y;
+      const currentX = currentRef.current.x;
+      const currentY = currentRef.current.y;
+
+      // 1. DEADZONE: Ignore micro-movements (hand shakes)
+      const dx = targetX - currentX;
+      const dy = targetY - currentY;
+      
+      if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
+        // 2. HEAVY LERP: Smooth out the movement (0.04 is very smooth)
+        currentRef.current.x += dx * 0.04;
+        currentRef.current.y += dy * 0.04;
+        setOrientation({ x: currentRef.current.x, y: currentRef.current.y });
+      }
+
       raf = requestAnimationFrame(animate);
     };
     raf = requestAnimationFrame(animate);
