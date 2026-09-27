@@ -5,8 +5,7 @@ import GlyphPortal from "@/components/ui/glyph-portal";
 import AsciiBackground from "@/components/ui/ascii-background";
 import LivingGradient from "@/components/ui/living-gradient";
 import AnimatedNoise from "@/components/ui/animated-noise";
-import SkillsMarquee from "@/components/ui/skills-marquee"; from "@/components/ui/animated-noise";
-import SkillsMarquee from "@/components/ui/skills-marquee"; from "@/components/ui/animated-noise";
+import SkillsMarquee from "@/components/ui/skills-marquee";
 import { Capabilities } from "@/components/sections/Capabilities";
 import { SelectedWork } from "@/components/sections/SelectedWork";
 import { Methodology } from "@/components/sections/Methodology";
@@ -16,15 +15,8 @@ function CaptionColorFixer() {
   useEffect(() => {
     const style = document.createElement("style");
     style.textContent = `
-      [data-gp-caption],
-      [data-gp-hint],
-      [data-gp-enter] {
-        color: #1a1a1a !important;
-      }
-      [data-gp-enter]:focus-visible {
-        background: #f5efe6 !important;
-        color: #1a1a1a !important;
-      }
+      [data-gp-caption], [data-gp-hint], [data-gp-enter] { color: #1a1a1a !important; }
+      [data-gp-enter]:focus-visible { background: #f5efe6 !important; color: #1a1a1a !important; }
     `;
     document.head.appendChild(style);
     return () => { document.head.removeChild(style); };
@@ -61,13 +53,13 @@ export default function Home() {
             </h2>
             <p className="max-w-xl text-sm sm:text-base leading-relaxed text-white/70">
               From VEDA-8B language models to scalable SaaS platforms — research,
-              architecture and deployment under one roof.
+              architecture and deployment under one roof. Scroll onward for
+              capabilities, selected work and methodology.
             </p>
           </div>
         </GlyphPortal>
 
         <Capabilities />
-        <SkillsMarquee />
         <SkillsMarquee />
         <SelectedWork />
         <Methodology />
