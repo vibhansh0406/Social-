@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 
 const RAMP = " .,'`-_:;=+*<>()[]{}#%@";
 
@@ -10,6 +10,8 @@ export type AsciiBackgroundProps = {
   color?: string;
   opacity?: number;
   invert?: boolean;
+  /** Paint each glyph with the source photo's own colours. */
+  useImageColors?: boolean;
   className?: string;
 };
 
@@ -19,6 +21,7 @@ export default function AsciiBackground({
   color = "#8ea79c",
   opacity = 0.55,
   invert = false,
+  useImageColors = false,
   className,
 }: AsciiBackgroundProps) {
   const preRef = useRef<HTMLPreElement>(null);
@@ -78,6 +81,17 @@ export default function AsciiBackground({
     };
   }, [src, charSize, invert]);
 
+  const paint: CSSProperties = useImageColors
+    ? {
+        color: "transparent",
+        backgroundImage: `url(${src})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        WebkitBackgroundClip: "text",
+        backgroundClip: "text",
+      }
+    : { color };
+
   return (
     <pre
       ref={preRef}
@@ -88,7 +102,6 @@ export default function AsciiBackground({
         inset: 0,
         margin: 0,
         overflow: "hidden",
-        color,
         opacity,
         fontSize: charSize,
         lineHeight: `${charSize}px`,
@@ -97,6 +110,7 @@ export default function AsciiBackground({
         userSelect: "none",
         pointerEvents: "none",
         whiteSpace: "pre",
+        ...paint,
       }}
     />
   );

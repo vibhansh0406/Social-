@@ -43,7 +43,7 @@ export default function LivingGradient({ children }: { children: ReactNode }) {
         <div className="absolute -right-[10%] top-[70%] h-[75vh] w-[80vw] rounded-full blur-3xl"
           style={{ background: "radial-gradient(circle at 45% 55%, #eec4a4 0%, rgba(238,196,164,0) 60%)", transform: "translate3d(0, calc(var(--sy, 0) * -0.07px), 0)", animation: "lg-drift 20s ease-in-out infinite reverse" }} />
       </div>
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 z-10 h-32 bg-gradient-to-b from-[#070b09] to-transparent" />
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 z-10 h-24 bg-gradient-to-b from-[#0d2b1f] to-transparent" />
       {children}
     </div>
   );
