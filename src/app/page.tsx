@@ -9,15 +9,15 @@ import { Initiate } from "@/components/sections/Initiate";
 export default function Home() {
   return (
     <LivingGradient>
-      <main className="relative min-h-screen text-neutral-900">
+      <main className="relative min-h-screen">
         <GlyphPortal
           word="VIBSOCIAL"
           enterLabel="Enter the studio"
           scrollLength={2.6}
           style={{
-            "--gp-paper": "transparent",
+            "--gp-paper": "#f5efe6",
             "--gp-ink": "#1a1a1a",
-            "--gp-field": "transparent",
+            "--gp-field": "#0d2b1f",
             "--gp-foreground": "#1a1a1a",
           }}
           background={
