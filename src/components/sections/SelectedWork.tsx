@@ -59,8 +59,8 @@ const PROJECTS = [
     ],
   },
   {
-    src: "https://images.unsplash.com/photo-1639762681485-074b7f938cc0?w=800&h=800&fit=crop&q=80",
-    alt: "Blockchain network",
+    src: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=800&fit=crop&q=80",
+    alt: "Global realtime network",
     title: "ChatMesh",
     subtitle: "Realtime Protocol",
     meta: [
