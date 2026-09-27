@@ -10,7 +10,6 @@ export type AsciiBackgroundProps = {
   color?: string;
   opacity?: number;
   invert?: boolean;
-  /** Paint each glyph with the source photo's own colours. */
   useImageColors?: boolean;
   className?: string;
 };
@@ -47,10 +46,11 @@ export default function AsciiBackground({
         canvas.height = rows;
         const ctx = canvas.getContext("2d", { willReadFrequently: true });
         if (!ctx) return;
+        ctx.filter = "saturate(1.35) contrast(1.2) brightness(1.15)";
         const scale = Math.max(cols / img.width, rows / img.height);
         const dw = img.width * scale;
         const dh = img.height * scale;
-        ctx.filter = "contrast(1.15) brightness(1.1)"; ctx.drawImage(img, (cols - dw) / 2, (rows - dh) / 2, dw, dh);
+        ctx.drawImage(img, (cols - dw) / 2, (rows - dh) / 2, dw, dh);
         const data = ctx.getImageData(0, 0, cols, rows).data;
         let out = "";
         for (let y = 0; y < rows; y++) {
@@ -81,37 +81,39 @@ export default function AsciiBackground({
     };
   }, [src, charSize, invert]);
 
-  const paint: CSSProperties = useImageColors
-    ? {
-        color: "transparent",
-        backgroundImage: `url(${src})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        WebkitBackgroundClip: "text",
-        backgroundClip: "text",
-      }
-    : { color };
+  const preStyle: CSSProperties = {
+    position: "absolute",
+    inset: 0,
+    margin: 0,
+    overflow: "hidden",
+    opacity,
+    fontSize: charSize,
+    lineHeight: `${charSize}px`,
+    letterSpacing: 0,
+    fontFamily: '"SFMono-Regular", Menlo, Consolas, monospace',
+    userSelect: "none",
+    pointerEvents: "none",
+    whiteSpace: "pre",
+    ...(useImageColors
+      ? {
+          color: "transparent",
+          backgroundImage: `url(${src})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          WebkitBackgroundClip: "text",
+          backgroundClip: "text",
+        }
+      : { color }),
+  };
 
-  return (
-    <pre
-      ref={preRef}
-      aria-hidden
-      className={className}
-      style={{
-        position: "absolute",
-        inset: 0,
-        margin: 0,
-        overflow: "hidden",
-        opacity,
-        fontSize: charSize,
-        lineHeight: `${charSize}px`,
-        letterSpacing: 0,
-        fontFamily: '"SFMono-Regular", Menlo, Consolas, monospace',
-        userSelect: "none",
-        pointerEvents: "none",
-        whiteSpace: "pre",
-        ...paint,
-      }}
-    />
-  );
+  const pre = <pre ref={preRef} aria-hidden className={className} style={preStyle} />;
+
+  if (useImageColors) {
+    return (
+      <div style={{ position: "absolute", inset: 0, background: "#050505" }}>
+        {pre}
+      </div>
+    );
+  }
+  return pre;
 }
