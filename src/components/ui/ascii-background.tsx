@@ -102,6 +102,7 @@ export default function AsciiBackground({
           backgroundPosition: "center",
           WebkitBackgroundClip: "text",
           backgroundClip: "text",
+          filter: "brightness(1.85) saturate(1.45) contrast(1.12)",
         }
       : { color }),
   };
