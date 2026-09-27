@@ -1,40 +1,95 @@
 "use client";
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import CoverflowCarousel from "@/components/ui/coverflow-carousel";
 
-const projects = [
-  { title: "VEDA-8B (LLM)", category: "AI / Model Architecture", desc: "Custom Large Language Model architecture optimized for specific domain reasoning and low-latency inference.", img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1200&q=80" },
-  { title: "Modern SaaS Platform", category: "Web / Full-Stack", desc: "High-performance, scalable SaaS infrastructure featuring real-time data synchronization and microservice backends.", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80" },
+const PROJECTS = [
+  {
+    src: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=800&fit=crop&q=80",
+    alt: "Neural network visualization",
+    title: "VEDA-8B",
+    subtitle: "LLM Architecture",
+    meta: [
+      { label: "Type", value: "Language Model" },
+      { label: "Parameters", value: "8 Billion" },
+      { label: "Status", value: "Production" },
+    ],
+  },
+  {
+    src: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=800&fit=crop&q=80",
+    alt: "SaaS dashboard analytics",
+    title: "Pulse SaaS",
+    subtitle: "Full-Stack Platform",
+    meta: [
+      { label: "Stack", value: "Next.js + Rust" },
+      { label: "Users", value: "12,000+" },
+      { label: "Status", value: "Live" },
+    ],
+  },
+  {
+    src: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=800&fit=crop&q=80",
+    alt: "Computer vision data stream",
+    title: "Vision-X",
+    subtitle: "Computer Vision",
+    meta: [
+      { label: "Framework", value: "PyTorch" },
+      { label: "Accuracy", value: "98.4%" },
+      { label: "Status", value: "Beta" },
+    ],
+  },
+  {
+    src: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=800&fit=crop&q=80",
+    alt: "Server racks with blue lighting",
+    title: "Neural Gateway",
+    subtitle: "API Infrastructure",
+    meta: [
+      { label: "Stack", value: "Go + gRPC" },
+      { label: "Latency", value: "< 50ms" },
+      { label: "Status", value: "Production" },
+    ],
+  },
+  {
+    src: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=800&fit=crop&q=80",
+    alt: "Circuit board macro",
+    title: "DataForge",
+    subtitle: "Analytics Engine",
+    meta: [
+      { label: "Stack", value: "ClickHouse" },
+      { label: "Throughput", value: "1M rps" },
+      { label: "Status", value: "Live" },
+    ],
+  },
+  {
+    src: "https://images.unsplash.com/photo-1639762681485-074b7f938cc0?w=800&h=800&fit=crop&q=80",
+    alt: "Blockchain network",
+    title: "ChatMesh",
+    subtitle: "Realtime Protocol",
+    meta: [
+      { label: "Stack", value: "WebSocket + CRDT" },
+      { label: "Peers", value: "P2P" },
+      { label: "Status", value: "Research" },
+    ],
+  },
 ];
 
 export function SelectedWork() {
   return (
     <section className="mx-auto max-w-7xl px-6 py-32 md:py-48">
-      <motion.h2 
+      <motion.h2
         initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
         className="font-serif text-5xl md:text-7xl mb-16 text-neutral-100"
       >
         Selected Work.
       </motion.h2>
-      <div className="space-y-24">
-        {projects.map((project) => (
-          <motion.a href="#" key={project.title} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 1 }} className="group block">
-            <div className="relative overflow-hidden rounded-lg aspect-[16/9] mb-8 bg-neutral-900">
-              <img src={project.img} alt={project.title} className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-105 grayscale group-hover:grayscale-0" />
-            </div>
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-              <div>
-                <p className="text-sm tracking-widest text-neutral-500 uppercase mb-3">{project.category}</p>
-                <h3 className="text-4xl md:text-5xl font-serif text-white mb-4">{project.title}</h3>
-                <p className="text-neutral-400 text-lg max-w-2xl">{project.desc}</p>
-              </div>
-              <div className="w-16 h-16 rounded-full border border-neutral-700 flex items-center justify-center group-hover:bg-white group-hover:border-white transition-all duration-500">
-                <ArrowUpRight className="w-6 h-6 text-white group-hover:text-black transition-colors duration-500" />
-              </div>
-            </div>
-          </motion.a>
-        ))}
-      </div>
+
+      <CoverflowCarousel
+        slides={PROJECTS}
+        showCaption
+        showPagination
+        showNavigation
+        cardWidth="clamp(200px, 28vw, 340px)"
+        label="Selected projects"
+        cardClassName="ring-1 ring-white/10"
+      />
     </section>
   );
 }
