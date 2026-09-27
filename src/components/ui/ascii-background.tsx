@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, type CSSProperties } from "react";
+import { useGyroscope } from "@/hooks/useGyroscope";
 
 const RAMP = " .,'`-_:;=+*<>()[]{}#%@";
 
@@ -25,6 +26,7 @@ export default function AsciiBackground({
 }: AsciiBackgroundProps) {
   const preRef = useRef<HTMLPreElement>(null);
   const brightUrlRef = useRef<string>("");
+  const { orientation } = useGyroscope();
 
   useEffect(() => {
     const pre = preRef.current;
@@ -47,17 +49,13 @@ export default function AsciiBackground({
         canvas.height = rows;
         const ctx = canvas.getContext("2d", { willReadFrequently: true });
         if (!ctx) return;
-        
-        // Draw original
         const scale = Math.max(cols / img.width, rows / img.height);
         const dw = img.width * scale;
         const dh = img.height * scale;
         ctx.drawImage(img, (cols - dw) / 2, (rows - dh) / 2, dw, dh);
-        
         const imgData = ctx.getImageData(0, 0, cols, rows);
         const data = imgData.data;
         
-        // Brighten pixels for the background fill
         const brightCanvas = document.createElement("canvas");
         brightCanvas.width = cols;
         brightCanvas.height = rows;
@@ -66,7 +64,6 @@ export default function AsciiBackground({
           const brightData = bCtx.createImageData(cols, rows);
           const bd = brightData.data;
           for (let i = 0; i < data.length; i += 4) {
-            // Boost brightness 2.5x for visibility on dark bg
             bd[i] = Math.min(255, data[i] * 2.5);
             bd[i+1] = Math.min(255, data[i+1] * 2.5);
             bd[i+2] = Math.min(255, data[i+2] * 2.5);
@@ -76,7 +73,6 @@ export default function AsciiBackground({
           brightUrlRef.current = brightCanvas.toDataURL();
         }
 
-        // Generate ASCII text based on luminance
         let out = "";
         for (let y = 0; y < rows; y++) {
           let line = "";
@@ -101,6 +97,9 @@ export default function AsciiBackground({
     return () => { cancelled = true; ro.disconnect(); };
   }, [src, charSize, invert]);
 
+  const tiltX = orientation.gamma * 0.3;
+  const tiltY = orientation.beta * 0.3;
+
   const preStyle: CSSProperties = {
     position: "absolute",
     inset: 0,
@@ -114,6 +113,8 @@ export default function AsciiBackground({
     userSelect: "none",
     pointerEvents: "none",
     whiteSpace: "pre",
+    transform: `translate3d(${tiltX}px, ${tiltY}px, 0)`,
+    transition: "transform 0.2s ease-out",
     ...(useImageColors
       ? {
           color: "transparent",
