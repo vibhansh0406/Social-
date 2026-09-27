@@ -19,7 +19,7 @@ export function Methodology() {
       <div className="space-y-20">
         {steps.map((step, i) => (
           <motion.div key={step.num} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: i * 0.15 }} className="grid grid-cols-1 md:grid-cols-12 gap-8 items-baseline border-b border-neutral-900/10 pb-10 group">
-            <span className="col-span-2 text-4xl md:text-6xl font-serif text-neutral-400 group-hover:text-neutral-900 transition-colors duration-500">{step.num}</span>
+            <span className="col-span-2 text-4xl md:text-6xl font-serif text-neutral-600 group-hover:text-neutral-900 transition-colors duration-500">{step.num}</span>
             <h3 className="col-span-4 text-2xl md:text-4xl font-medium text-neutral-900">{step.title}</h3>
             <p className="col-span-6 text-neutral-600 text-lg leading-relaxed">{step.desc}</p>
           </motion.div>
