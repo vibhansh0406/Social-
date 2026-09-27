@@ -36,11 +36,6 @@ export function Initiate() {
       >
         <div className="flex items-center gap-2 mb-8 px-4 py-2 rounded-full bg-neutral-900/5 border border-neutral-900/10 backdrop-blur-md">
           <Circle className="w-2 h-2 fill-green-500 text-green-500 animate-pulse" />
-          <span className="text-[10px] uppercase tracking-widest text-neutral-600 font-medium">Available for Q3 2024</span>
-        </div>
-
-        <h2 className="font-serif text-5xl sm:text-7xl md:text-9xl text-neutral-900 tracking-tighter leading-[0.9] mb-12">
-          Let's build the <br />
           <span className="italic text-neutral-500">future.</span>
         </h2>
 
