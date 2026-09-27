@@ -73,10 +73,10 @@ const PROJECTS = [
 
 export function SelectedWork() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-32 md:py-48">
+    <section className="mx-auto max-w-7xl px-4 sm:px-6 py-20 sm:py-32 md:py-48">
       <motion.h2
         initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-        className="font-serif text-5xl md:text-7xl mb-16 text-neutral-900"
+        className="font-serif text-4xl sm:text-5xl md:text-7xl mb-10 sm:mb-16 text-neutral-900"
       >
         Selected Work.
       </motion.h2>
@@ -86,9 +86,9 @@ export function SelectedWork() {
         showCaption
         showPagination
         showNavigation
-        cardWidth="clamp(200px, 28vw, 340px)"
+        cardWidth="clamp(160px, 60vw, 340px)"
         label="Selected projects"
-        cardClassName="ring-1 ring-white/10"
+        cardClassName="ring-1 ring-neutral-900/10"
       />
     </section>
   );

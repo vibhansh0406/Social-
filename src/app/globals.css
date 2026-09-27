@@ -61,3 +61,30 @@ html.lenis, html.lenis body {
 
 /* Hide GlyphPortal touch letter picker dropdown */
 [data-gp-touch-picker] { display: none !important; }
+
+/* Mobile viewport fixes */
+html, body {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Hide GlyphPortal touch picker on mobile (we use scroll instead) */
+[data-gp-touch-picker] { display: none !important; }
+
+/* Smooth scroll on mobile */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent horizontal overflow */
+body {
+  overflow-x: hidden;
+}
+
+/* Mobile: reduce motion for performance */
+@media (max-width: 640px) {
+  [data-gp-pin] {
+    will-change: auto !important;
+  }
+}
