@@ -11,6 +11,7 @@ export type AsciiBackgroundProps = {
   opacity?: number;
   invert?: boolean;
   useImageColors?: boolean;
+  glow?: boolean;
   className?: string;
 };
 
@@ -21,6 +22,7 @@ export default function AsciiBackground({
   opacity = 0.55,
   invert = false,
   useImageColors = false,
+  glow = false,
   className,
 }: AsciiBackgroundProps) {
   const preRef = useRef<HTMLPreElement>(null);
@@ -102,7 +104,12 @@ export default function AsciiBackground({
           backgroundPosition: "center",
           WebkitBackgroundClip: "text",
           backgroundClip: "text",
-          filter: "brightness(1.85) saturate(1.45) contrast(1.12)",
+          ...(glow
+            ? {
+                filter: "brightness(1.6) saturate(1.5)",
+                textShadow: "0 0 8px rgba(255,200,150,0.6), 0 0 16px rgba(255,180,120,0.4)",
+              }
+            : {}),
         }
       : { color }),
   };

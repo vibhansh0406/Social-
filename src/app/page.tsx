@@ -20,7 +20,7 @@ export default function Home() {
           "--gp-foreground": "#e8f0ea",
         }}
         background={
-          <AsciiBackground src="/me.jpeg" charSize={5} opacity={1} useImageColors />
+          <AsciiBackground src="/me.jpeg" charSize={5} opacity={1} useImageColors invert glow />
         }
       >
         <div className="max-w-2xl">
