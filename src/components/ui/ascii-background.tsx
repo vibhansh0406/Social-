@@ -11,7 +11,6 @@ export type AsciiBackgroundProps = {
   opacity?: number;
   invert?: boolean;
   useImageColors?: boolean;
-  glow?: boolean;
   className?: string;
 };
 
@@ -22,10 +21,10 @@ export default function AsciiBackground({
   opacity = 0.55,
   invert = false,
   useImageColors = false,
-  glow = false,
   className,
 }: AsciiBackgroundProps) {
   const preRef = useRef<HTMLPreElement>(null);
+  const brightUrlRef = useRef<string>("");
 
   useEffect(() => {
     const pre = preRef.current;
@@ -48,12 +47,36 @@ export default function AsciiBackground({
         canvas.height = rows;
         const ctx = canvas.getContext("2d", { willReadFrequently: true });
         if (!ctx) return;
-        ctx.filter = "saturate(1.35) contrast(1.2) brightness(1.15)";
+        
+        // Draw original
         const scale = Math.max(cols / img.width, rows / img.height);
         const dw = img.width * scale;
         const dh = img.height * scale;
         ctx.drawImage(img, (cols - dw) / 2, (rows - dh) / 2, dw, dh);
-        const data = ctx.getImageData(0, 0, cols, rows).data;
+        
+        const imgData = ctx.getImageData(0, 0, cols, rows);
+        const data = imgData.data;
+        
+        // Brighten pixels for the background fill
+        const brightCanvas = document.createElement("canvas");
+        brightCanvas.width = cols;
+        brightCanvas.height = rows;
+        const bCtx = brightCanvas.getContext("2d");
+        if (bCtx) {
+          const brightData = bCtx.createImageData(cols, rows);
+          const bd = brightData.data;
+          for (let i = 0; i < data.length; i += 4) {
+            // Boost brightness 2.5x for visibility on dark bg
+            bd[i] = Math.min(255, data[i] * 2.5);
+            bd[i+1] = Math.min(255, data[i+1] * 2.5);
+            bd[i+2] = Math.min(255, data[i+2] * 2.5);
+            bd[i+3] = 255;
+          }
+          bCtx.putImageData(brightData, 0, 0);
+          brightUrlRef.current = brightCanvas.toDataURL();
+        }
+
+        // Generate ASCII text based on luminance
         let out = "";
         for (let y = 0; y < rows; y++) {
           let line = "";
@@ -68,19 +91,14 @@ export default function AsciiBackground({
         }
         pre.textContent = out;
       };
-      img.onerror = () => {
-        if (!cancelled) pre.textContent = "";
-      };
+      img.onerror = () => { if (!cancelled) pre.textContent = ""; };
       img.src = src;
     };
 
     render();
     const ro = new ResizeObserver(() => render());
     ro.observe(pre);
-    return () => {
-      cancelled = true;
-      ro.disconnect();
-    };
+    return () => { cancelled = true; ro.disconnect(); };
   }, [src, charSize, invert]);
 
   const preStyle: CSSProperties = {
@@ -99,17 +117,11 @@ export default function AsciiBackground({
     ...(useImageColors
       ? {
           color: "transparent",
-          backgroundImage: `url(${src})`,
+          backgroundImage: brightUrlRef.current ? `url(${brightUrlRef.current})` : `url(${src})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           WebkitBackgroundClip: "text",
           backgroundClip: "text",
-          ...(glow
-            ? {
-                filter: "brightness(1.6) saturate(1.5)",
-                textShadow: "0 0 8px rgba(255,200,150,0.6), 0 0 16px rgba(255,180,120,0.4)",
-              }
-            : {}),
         }
       : { color }),
   };
@@ -118,7 +130,7 @@ export default function AsciiBackground({
 
   if (useImageColors) {
     return (
-      <div style={{ position: "absolute", inset: 0, background: "#050505" }}>
+      <div style={{ position: "absolute", inset: 0, background: "#000000" }}>
         {pre}
       </div>
     );
