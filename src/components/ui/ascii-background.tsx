@@ -50,7 +50,7 @@ export default function AsciiBackground({
         const scale = Math.max(cols / img.width, rows / img.height);
         const dw = img.width * scale;
         const dh = img.height * scale;
-        ctx.drawImage(img, (cols - dw) / 2, (rows - dh) / 2, dw, dh);
+        ctx.filter = "contrast(1.15) brightness(1.1)"; ctx.drawImage(img, (cols - dw) / 2, (rows - dh) / 2, dw, dh);
         const data = ctx.getImageData(0, 0, cols, rows).data;
         let out = "";
         for (let y = 0; y < rows; y++) {
