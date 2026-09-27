@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import CoverflowCarousel from "@/components/ui/coverflow-carousel";
 import BottomSheet from "@/components/ui/bottom-sheet";
 import { useState } from "react";
-import { hapticLight } from "@/lib/haptics";
 
 const PROJECTS = [
   {
@@ -79,7 +78,6 @@ export function SelectedWork() {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   const handleCardClick = (index: number) => {
-    hapticLight();
     setSelectedSlide(PROJECTS[index]);
     setIsSheetOpen(true);
   };
@@ -101,7 +99,7 @@ export function SelectedWork() {
           showNavigation
           cardWidth="clamp(160px, 60vw, 340px)"
           label="Selected projects"
-          cardClassName="ring-1 ring-neutral-900/10 cursor-pointer"
+          cardClassName="ring-1 ring-neutral-900/10"
           onCardClick={handleCardClick}
         />
       </section>

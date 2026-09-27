@@ -2,11 +2,10 @@
 
 import * as React from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
 import { cn } from "@/lib/utils";
+import { hapticLight } from "@/lib/haptics";
 
-const useIsoLayoutEffect =
-  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
+const useIsoLayoutEffect = typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
 
 export interface CoverflowSlide {
   src: string;
@@ -32,6 +31,7 @@ export interface CoverflowCarouselProps {
   label?: string;
   className?: string;
   cardClassName?: string;
+  onCardClick?: (index: number) => void;
 }
 
 export function CoverflowCarousel({
@@ -50,6 +50,7 @@ export function CoverflowCarousel({
   label = "Cover carousel",
   className,
   cardClassName,
+  onCardClick,
 }: CoverflowCarouselProps) {
   const count = slides.length;
   const frameRef = React.useRef<HTMLDivElement>(null);
@@ -58,16 +59,10 @@ export function CoverflowCarousel({
   const targetRef = React.useRef(0);
   const widthRef = React.useRef(0);
   const rafRef = React.useRef<number | null>(null);
-  const dragRef = React.useRef<{
-    id: number; x: number; pos: number; v: number; t: number;
-  } | null>(null);
-
+  const dragRef = React.useRef<{ id: number; x: number; pos: number; v: number; t: number } | null>(null);
   const [selected, setSelected] = React.useState(0);
 
-  const indexAt = React.useCallback(
-    (pos: number) => ((Math.round(pos) % count) + count) % count,
-    [count],
-  );
+  const indexAt = React.useCallback((pos: number) => ((Math.round(pos) % count) + count) % count, [count]);
 
   const paint = React.useCallback(() => {
     const width = widthRef.current;
@@ -117,25 +112,17 @@ export function CoverflowCarousel({
     [indexAt, paint],
   );
 
-  const clamp = React.useCallback(
-    (pos: number) => (loop ? pos : Math.max(0, Math.min(count - 1, pos))),
-    [count, loop],
-  );
+  const clamp = React.useCallback((pos: number) => (loop ? pos : Math.max(0, Math.min(count - 1, pos))), [count, loop]);
 
   const goTo = React.useCallback(
     (index: number) => {
-      const target = loop
-        ? index + Math.round((targetRef.current - index) / count) * count
-        : index;
+      const target = loop ? index + Math.round((targetRef.current - index) / count) * count : index;
       settle(clamp(target));
     },
     [clamp, count, loop, settle],
   );
 
-  const nudge = React.useCallback(
-    (by: number) => settle(clamp(Math.round(targetRef.current) + by)),
-    [clamp, settle],
-  );
+  const nudge = React.useCallback((by: number) => settle(clamp(Math.round(targetRef.current) + by)), [clamp, settle]);
 
   const onPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
     if (rafRef.current !== null) {
@@ -144,13 +131,7 @@ export function CoverflowCarousel({
     }
     event.currentTarget.setPointerCapture(event.pointerId);
     targetRef.current = posRef.current;
-    dragRef.current = {
-      id: event.pointerId,
-      x: event.clientX,
-      pos: posRef.current,
-      v: 0,
-      t: performance.now(),
-    };
+    dragRef.current = { id: event.pointerId, x: event.clientX, pos: posRef.current, v: 0, t: performance.now() };
   };
 
   const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
@@ -191,23 +172,17 @@ export function CoverflowCarousel({
     return () => observer.disconnect();
   }, [paint]);
 
-  React.useEffect(
-    () => () => {
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-    },
-    [],
-  );
+  React.useEffect(() => () => { if (rafRef.current !== null) cancelAnimationFrame(rafRef.current); }, []);
 
   const active = slides[selected];
 
+  const handleCaptionClick = () => {
+    hapticLight();
+    onCardClick?.(selected);
+  };
+
   return (
-    <div
-      className={cn("w-full", className)}
-      style={{ ["--cf-card" as string]: cardWidth }}
-      role="region"
-      aria-roledescription="carousel"
-      aria-label={label}
-    >
+    <div className={cn("w-full", className)} style={{ ["--cf-card" as string]: cardWidth }} role="region" aria-roledescription="carousel" aria-label={label}>
       <div className="relative">
         <div
           ref={frameRef}
@@ -221,18 +196,9 @@ export function CoverflowCarousel({
             else if (event.key === "ArrowRight") { event.preventDefault(); nudge(1); }
           }}
           className="cursor-grab overflow-hidden py-10 outline-none ring-ring focus-visible:ring-2 active:cursor-grabbing"
-          style={{
-            perspective: `calc(var(--cf-card) * ${perspective})`,
-            touchAction: "pan-y",
-          }}
+          style={{ perspective: `calc(var(--cf-card) * ${perspective})`, touchAction: "pan-y" }}
         >
-          <div
-            className="relative select-none"
-            style={{
-              height: "var(--cf-card)",
-              transformStyle: "preserve-3d",
-            }}
-          >
+          <div className="relative select-none" style={{ height: "var(--cf-card)", transformStyle: "preserve-3d" }}>
             {slides.map((slide, index) => (
               <div
                 key={index}
@@ -241,17 +207,12 @@ export function CoverflowCarousel({
                 aria-roledescription="slide"
                 aria-label={`${index + 1} of ${count}`}
                 className={cn(
-                  "absolute left-1/2 top-0 aspect-square overflow-hidden rounded-2xl bg-muted shadow-xl will-change-transform",
+                  "absolute left-1/2 top-0 aspect-square overflow-hidden rounded-2xl bg-muted shadow-xl will-change-transform transition-transform duration-200 active:scale-95",
                   cardClassName,
                 )}
                 style={{ width: "var(--cf-card)" }}
               >
-                <img
-                  src={slide.src}
-                  alt={slide.alt}
-                  draggable={false}
-                  className="h-full w-full select-none object-cover"
-                />
+                <img src={slide.src} alt={slide.alt} draggable={false} className="h-full w-full select-none object-cover pointer-events-none" />
               </div>
             ))}
           </div>
@@ -259,48 +220,37 @@ export function CoverflowCarousel({
 
         {showNavigation && (
           <>
-            <button type="button" aria-label="Previous slide" onClick={() => nudge(-1)}
-              className="absolute left-3 top-1/2 z-[200] -translate-y-1/2 rounded-full bg-white/70 p-2 text-neutral-900 backdrop-blur transition hover:bg-white">
+            <button type="button" aria-label="Previous slide" onClick={() => { hapticLight(); nudge(-1); }}
+              className="absolute left-3 top-1/2 z-[200] -translate-y-1/2 rounded-full bg-background/70 p-2 text-foreground backdrop-blur transition hover:bg-background">
               <ChevronLeft className="size-5" />
             </button>
-            <button type="button" aria-label="Next slide" onClick={() => nudge(1)}
-              className="absolute right-3 top-1/2 z-[200] -translate-y-1/2 rounded-full bg-white/70 p-2 text-neutral-900 backdrop-blur transition hover:bg-white">
+            <button type="button" aria-label="Next slide" onClick={() => { hapticLight(); nudge(1); }}
+              className="absolute right-3 top-1/2 z-[200] -translate-y-1/2 rounded-full bg-background/70 p-2 text-foreground backdrop-blur transition hover:bg-background">
               <ChevronRight className="size-5" />
             </button>
           </>
         )}
       </div>
 
+      {/* CLICKABLE CAPTION */}
       {showCaption && active?.title && (
-        <div key={selected} className="mt-2 flex flex-col items-center px-6 duration-300 animate-in fade-in">
-          <p className="text-[15px] font-semibold tracking-tight text-neutral-900">
-            {active.title}
+        <div 
+          onClick={handleCaptionClick}
+          className="mt-4 flex flex-col items-center px-6 cursor-pointer active:scale-95 transition-transform duration-150"
+        >
+          <p className="text-[15px] font-semibold tracking-tight text-neutral-900 border-b border-transparent hover:border-neutral-900 transition-colors">
+            {active.title} <span className="text-xs text-neutral-400 ml-2">(Tap for details)</span>
           </p>
-          {active.subtitle && (
-            <p className="mt-1 text-[13px] text-neutral-600">
-              {active.subtitle}
-            </p>
-          )}
-          {active.meta && active.meta.length > 0 && (
-            <dl className="mt-4 w-full max-w-[260px] text-[12px]">
-              {active.meta.map((row) => (
-                <div key={row.label} className="flex justify-between py-[5px]">
-                  <dt className="text-neutral-600">{row.label}</dt>
-                  <dd className="font-medium text-neutral-900">{row.value}</dd>
-                </div>
-              ))}
-            </dl>
-          )}
+          {active.subtitle && <p className="mt-1 text-[13px] text-neutral-600">{active.subtitle}</p>}
         </div>
       )}
 
       {showPagination && (
         <div className="mt-6 flex items-center justify-center gap-2">
           {slides.map((_, index) => (
-            <button key={index} type="button" aria-label={`Go to slide ${index + 1}`}
-              aria-current={index === selected} onClick={() => goTo(index)}
-              className={cn("size-2 rounded-full bg-neutral-900 transition-opacity",
-                index === selected ? "opacity-100" : "opacity-30")} />
+            <button key={index} type="button" aria-label={`Go to slide ${index + 1}`} aria-current={index === selected}
+              onClick={() => { hapticLight(); goTo(index); }}
+              className={cn("size-2 rounded-full bg-neutral-900 transition-opacity", index === selected ? "opacity-100" : "opacity-30")} />
           ))}
         </div>
       )}
