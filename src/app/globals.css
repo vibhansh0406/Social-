@@ -58,3 +58,6 @@ html.lenis, html.lenis body {
     --ring: 0 0% 83.1%;
   }
 }
+
+/* Hide GlyphPortal touch letter picker dropdown */
+[data-gp-touch-picker] { display: none !important; }
