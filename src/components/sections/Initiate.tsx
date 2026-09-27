@@ -1,6 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Circle } from "lucide-react";
+import { useDevice } from "@/hooks/useDevice";
+import { useState, useEffect } from "react";
 
 const socials = [
   { name: "GitHub", url: "https://github.com/vibhansh0406" },
@@ -8,45 +10,75 @@ const socials = [
 ];
 
 export function Initiate() {
+  const { isHighEnd } = useDevice();
+  const [time, setTime] = useState("");
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      setTime(now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false }));
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <section className="relative mx-auto max-w-7xl px-4 sm:px-6 py-32 sm:py-48 md:py-64 flex flex-col min-h-[70vh]">
+    <section className="relative mx-auto max-w-7xl px-6 sm:px-12 py-32 sm:py-48 flex flex-col min-h-[80vh] justify-between">
+      
+      {/* Main CTA */}
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }} 
         whileInView={{ opacity: 1, scale: 1 }} 
         viewport={{ once: true }} 
         transition={{ duration: 1 }}
-        className="flex-grow flex flex-col items-center justify-center text-center"
+        className="flex flex-col items-center text-center z-10"
       >
-        <p className="text-xs sm:text-sm tracking-[0.3em] text-neutral-500 uppercase mb-6 sm:mb-8">Initiate.</p>
-        <h2 className="font-serif text-4xl sm:text-6xl md:text-8xl mb-8 sm:mb-12 text-neutral-900 tracking-tighter leading-[1.1]">
-          Ready to build the <br className="hidden sm:block" /> next generation of <br className="hidden sm:block" />
-          <span className="italic text-neutral-500">intelligent systems?</span>
+        <div className="flex items-center gap-2 mb-8 px-4 py-2 rounded-full bg-neutral-900/5 border border-neutral-900/10 backdrop-blur-md">
+          <Circle className="w-2 h-2 fill-green-500 text-green-500 animate-pulse" />
+          <span className="text-[10px] uppercase tracking-widest text-neutral-600 font-medium">Available for Q3 2024</span>
+        </div>
+
+        <h2 className="font-serif text-5xl sm:text-7xl md:text-9xl text-neutral-900 tracking-tighter leading-[0.9] mb-12">
+          Let's build the <br />
+          <span className="italic text-neutral-500">future.</span>
         </h2>
-        <a href="mailto:vvibhansh@gmail.com" className="group inline-flex items-center gap-3 sm:gap-4 text-xl sm:text-2xl md:text-3xl text-neutral-900 border-b border-neutral-400 pb-3 sm:pb-4 hover:border-neutral-900 transition-colors duration-500">
-          Transmit Message
-          <ArrowUpRight className="w-5 h-5 sm:w-8 sm:h-8 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-500" />
+
+        <a href="mailto:vvibhansh@gmail.com" className="group relative inline-flex items-center gap-4 text-xl sm:text-2xl text-neutral-900">
+          <span className="relative z-10">Transmit Message</span>
+          <ArrowUpRight className="w-6 h-6 group-hover:rotate-45 transition-transform duration-500" />
+          <div className="absolute inset-0 border-b border-neutral-900/30 group-hover:border-neutral-900 transition-colors" />
         </a>
       </motion.div>
 
-      {/* Premium Social Footer */}
-      <footer className="mt-auto pt-20 flex flex-col items-center gap-8">
-        <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
-          {socials.map((s) => (
-            <a 
+      {/* Deep Footer */}
+      <footer className="mt-20 pt-12 border-t border-neutral-900/10 flex flex-col md:flex-row justify-between items-end gap-12">
+        
+        {/* Socials with Hover Depth */}
+        <div className="flex flex-wrap gap-4">
+          {socials.map((s, i) => (
+            <motion.a 
               key={s.name} 
               href={s.url} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="group relative px-5 py-2.5 rounded-full border border-neutral-900/20 bg-white/30 backdrop-blur-sm text-[10px] sm:text-xs uppercase tracking-widest text-neutral-700 hover:bg-neutral-900 hover:text-white hover:border-neutral-900 hover:scale-105 transition-all duration-300"
+              whileHover={{ y: -5, scale: 1.05 }}
+              className="px-6 py-3 rounded-full bg-white/50 border border-neutral-900/10 backdrop-blur-md text-xs uppercase tracking-widest text-neutral-800 hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition-all duration-300 shadow-sm hover:shadow-xl"
             >
               {s.name}
-            </a>
+            </motion.a>
           ))}
         </div>
-        
-        <div className="flex flex-col sm:flex-row justify-between items-center w-full text-[10px] text-neutral-500 tracking-widest uppercase gap-2 px-4">
-          <span>© 2026 VibSocial</span>
-          <span>Engineered by Vibhansh</span>
+
+        {/* Context & Time */}
+        <div className="flex flex-col items-start md:items-end gap-2">
+          <div className="flex items-center gap-3 text-neutral-500">
+            <span className="text-xs uppercase tracking-widest">Local Time</span>
+            <span className="font-mono text-sm text-neutral-900">{time} IST</span>
+          </div>
+          <div className="text-[10px] text-neutral-400 uppercase tracking-widest mt-2">
+            © 2024 VibSocial. Engineered by Vibhansh.
+          </div>
         </div>
       </footer>
     </section>

@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { useDevice } from "@/hooks/useDevice";
 
 const steps = [
   { num: "01", title: "Research & Logic", desc: "Defining constraints and mapping algorithmic pathways." },
@@ -8,32 +9,46 @@ const steps = [
 ];
 
 export function Methodology() {
+  const { isDesktop } = useDevice();
+
   return (
-    <section className="mx-auto max-w-7xl px-4 sm:px-6 py-20 sm:py-32 md:py-48 border-t border-neutral-900/10">
+    <section className="mx-auto max-w-7xl px-6 sm:px-12 py-24 sm:py-40 border-t border-neutral-900/10">
       <motion.h2 
         initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-        className="font-serif text-4xl sm:text-5xl md:text-7xl mb-12 sm:mb-24 text-neutral-900"
+        className="font-serif text-5xl sm:text-7xl md:text-8xl mb-20 text-neutral-900 tracking-tight"
       >
         Methodology.
       </motion.h2>
-      <div className="space-y-12 sm:space-y-20">
+      
+      <div className="space-y-16 sm:space-y-32">
         {steps.map((step, i) => (
           <motion.div 
             key={step.num} 
-            initial={{ opacity: 0, x: -20 }} 
-            whileInView={{ opacity: 1, x: 0 }} 
-            viewport={{ once: true }} 
-            transition={{ duration: 0.8, delay: i * 0.15 }} 
-            className="grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-8 items-start border-b border-neutral-900/10 pb-8 sm:pb-10 group"
+            initial={{ opacity: 0, y: 30 }} 
+            whileInView={{ opacity: 1, y: 0 }} 
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: i * 0.1 }} 
+            className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12 items-start border-b border-neutral-900/10 pb-12 md:pb-20 group"
           >
-            <div className="sm:col-span-2">
-              <span className="text-3xl sm:text-4xl md:text-6xl font-serif text-neutral-400 group-hover:text-neutral-900 transition-colors duration-500">{step.num}</span>
+            {/* Number */}
+            <div className="md:col-span-2">
+              <span className="text-4xl md:text-6xl font-serif text-neutral-400 group-hover:text-neutral-900 transition-colors duration-700">
+                {step.num}
+              </span>
             </div>
-            <div className="sm:col-span-4">
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-medium text-neutral-900 leading-tight">{step.title}</h3>
+            
+            {/* Title */}
+            <div className="md:col-span-4">
+              <h3 className="text-2xl md:text-4xl font-medium text-neutral-900 leading-tight tracking-tight">
+                {step.title}
+              </h3>
             </div>
-            <div className="sm:col-span-6">
-              <p className="text-sm sm:text-base text-neutral-600 leading-relaxed">{step.desc}</p>
+            
+            {/* Description */}
+            <div className="md:col-span-6">
+              <p className="text-base md:text-lg text-neutral-600 leading-relaxed max-w-md">
+                {step.desc}
+              </p>
             </div>
           </motion.div>
         ))}
