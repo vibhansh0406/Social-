@@ -1,6 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
 import CoverflowCarousel from "@/components/ui/coverflow-carousel";
+import BottomSheet from "@/components/ui/bottom-sheet";
+import { useState } from "react";
+import { hapticLight } from "@/lib/haptics";
 
 const PROJECTS = [
   {
@@ -72,24 +75,42 @@ const PROJECTS = [
 ];
 
 export function SelectedWork() {
-  return (
-    <section className="mx-auto max-w-7xl px-4 sm:px-6 py-20 sm:py-32 md:py-48">
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-        className="font-serif text-4xl sm:text-5xl md:text-7xl mb-10 sm:mb-16 text-neutral-900"
-      >
-        Selected Work.
-      </motion.h2>
+  const [selectedSlide, setSelectedSlide] = useState<typeof PROJECTS[0] | null>(null);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
 
-      <CoverflowCarousel
-        slides={PROJECTS}
-        showCaption
-        showPagination
-        showNavigation
-        cardWidth="clamp(160px, 60vw, 340px)"
-        label="Selected projects"
-        cardClassName="ring-1 ring-neutral-900/10"
+  const handleCardClick = (index: number) => {
+    hapticLight();
+    setSelectedSlide(PROJECTS[index]);
+    setIsSheetOpen(true);
+  };
+
+  return (
+    <>
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-20 sm:py-32 md:py-48">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+          className="font-serif text-4xl sm:text-5xl md:text-7xl mb-10 sm:mb-16 text-neutral-900"
+        >
+          Selected Work.
+        </motion.h2>
+
+        <CoverflowCarousel
+          slides={PROJECTS}
+          showCaption
+          showPagination
+          showNavigation
+          cardWidth="clamp(160px, 60vw, 340px)"
+          label="Selected projects"
+          cardClassName="ring-1 ring-neutral-900/10 cursor-pointer"
+          onCardClick={handleCardClick}
+        />
+      </section>
+
+      <BottomSheet 
+        isOpen={isSheetOpen} 
+        onClose={() => setIsSheetOpen(false)} 
+        slide={selectedSlide} 
       />
-    </section>
+    </>
   );
 }
