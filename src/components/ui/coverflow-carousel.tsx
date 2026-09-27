@@ -260,11 +260,11 @@ export function CoverflowCarousel({
         {showNavigation && (
           <>
             <button type="button" aria-label="Previous slide" onClick={() => nudge(-1)}
-              className="absolute left-3 top-1/2 z-[200] -translate-y-1/2 rounded-full bg-background/70 p-2 text-foreground backdrop-blur transition hover:bg-background">
+              className="absolute left-3 top-1/2 z-[200] -translate-y-1/2 rounded-full bg-white/70 p-2 text-neutral-900 backdrop-blur transition hover:bg-white">
               <ChevronLeft className="size-5" />
             </button>
             <button type="button" aria-label="Next slide" onClick={() => nudge(1)}
-              className="absolute right-3 top-1/2 z-[200] -translate-y-1/2 rounded-full bg-background/70 p-2 text-foreground backdrop-blur transition hover:bg-background">
+              className="absolute right-3 top-1/2 z-[200] -translate-y-1/2 rounded-full bg-white/70 p-2 text-neutral-900 backdrop-blur transition hover:bg-white">
               <ChevronRight className="size-5" />
             </button>
           </>
@@ -273,11 +273,11 @@ export function CoverflowCarousel({
 
       {showCaption && active?.title && (
         <div key={selected} className="mt-2 flex flex-col items-center px-6 duration-300 animate-in fade-in">
-          <p className="text-[15px] font-semibold tracking-tight text-white">
+          <p className="text-[15px] font-semibold tracking-tight text-neutral-900">
             {active.title}
           </p>
           {active.subtitle && (
-            <p className="mt-1 text-[13px] text-neutral-400">
+            <p className="mt-1 text-[13px] text-neutral-600">
               {active.subtitle}
             </p>
           )}
@@ -285,8 +285,8 @@ export function CoverflowCarousel({
             <dl className="mt-4 w-full max-w-[260px] text-[12px]">
               {active.meta.map((row) => (
                 <div key={row.label} className="flex justify-between py-[5px]">
-                  <dt className="text-neutral-400">{row.label}</dt>
-                  <dd className="font-medium text-white">{row.value}</dd>
+                  <dt className="text-neutral-600">{row.label}</dt>
+                  <dd className="font-medium text-neutral-900">{row.value}</dd>
                 </div>
               ))}
             </dl>
@@ -299,7 +299,7 @@ export function CoverflowCarousel({
           {slides.map((_, index) => (
             <button key={index} type="button" aria-label={`Go to slide ${index + 1}`}
               aria-current={index === selected} onClick={() => goTo(index)}
-              className={cn("size-2 rounded-full bg-white transition-opacity",
+              className={cn("size-2 rounded-full bg-neutral-900 transition-opacity",
                 index === selected ? "opacity-100" : "opacity-30")} />
           ))}
         </div>

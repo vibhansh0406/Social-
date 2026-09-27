@@ -1,5 +1,6 @@
 import GlyphPortal from "@/components/ui/glyph-portal";
 import AsciiBackground from "@/components/ui/ascii-background";
+import LivingGradient from "@/components/ui/living-gradient";
 import { Capabilities } from "@/components/sections/Capabilities";
 import { SelectedWork } from "@/components/sections/SelectedWork";
 import { Methodology } from "@/components/sections/Methodology";
@@ -37,10 +38,12 @@ export default function Home() {
         </div>
       </GlyphPortal>
 
-      <Capabilities />
-      <SelectedWork />
-      <Methodology />
-      <Initiate />
+      <LivingGradient>
+        <Capabilities />
+        <SelectedWork />
+        <Methodology />
+        <Initiate />
+      </LivingGradient>
     </main>
   );
 }
