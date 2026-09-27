@@ -1,26 +1,47 @@
-import type { Metadata } from "next";
-import { Inter, Instrument_Serif } from "next/font/google";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { SmoothScrollProvider } from "@/components/providers/smooth-scroll";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
-const instrument = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-serif",
-});
 
 export const metadata: Metadata = {
-  title: "VibSocial | AI & Web Engineering",
-  description: "Engineering the next generation of intelligent systems. Machine Learning, Deep Learning, and Full-Stack Architecture.",
+  title: {
+    default: "VibSocial | AI & Full-Stack Engineering",
+    template: "%s | VibSocial",
+  },
+  description: "Engineering the next generation of intelligent systems. VEDA-8B, scalable SaaS platforms, and AI architecture by Vibhansh.",
+  keywords: ["AI", "Machine Learning", "Full-Stack", "Next.js", "VibSocial", "Vibhansh", "Portfolio", "VEDA-8B"],
+  authors: [{ name: "Vibhansh", url: "https://vibsocial.vercel.app" }],
+  creator: "Vibhansh",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://vibsocial.vercel.app",
+    siteName: "VibSocial",
+    title: "VibSocial | AI & Full-Stack Engineering",
+    description: "Engineering the next generation of intelligent systems.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "VibSocial | AI & Full-Stack Engineering",
+    description: "Engineering the next generation of intelligent systems.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-video-preview": -1, "max-image-preview": "large", "max-snippet": -1 },
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#070b09",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.variable} ${instrument.variable} font-sans bg-[#fbfbfa] text-neutral-900 antialiased`}>
-        <SmoothScrollProvider>{children}</SmoothScrollProvider>
-      </body>
+    <html lang="en">
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
