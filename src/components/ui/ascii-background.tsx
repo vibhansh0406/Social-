@@ -97,12 +97,12 @@ export default function AsciiBackground({
     return () => { cancelled = true; ro.disconnect(); };
   }, [src, charSize, invert]);
 
-  const tiltX = orientation.gamma * 0.3;
-  const tiltY = orientation.beta * 0.3;
+  const tiltX = orientation.x * 0.5;
+  const tiltY = orientation.y * 0.5;
 
   const preStyle: CSSProperties = {
     position: "absolute",
-    inset: 0,
+    inset: "-20px",
     margin: 0,
     overflow: "hidden",
     opacity,
@@ -114,7 +114,7 @@ export default function AsciiBackground({
     pointerEvents: "none",
     whiteSpace: "pre",
     transform: `translate3d(${tiltX}px, ${tiltY}px, 0)`,
-    transition: "transform 0.2s ease-out",
+    transition: "transform 0.15s linear",
     ...(useImageColors
       ? {
           color: "transparent",
@@ -131,7 +131,7 @@ export default function AsciiBackground({
 
   if (useImageColors) {
     return (
-      <div style={{ position: "absolute", inset: 0, background: "#000000" }}>
+      <div style={{ position: "absolute", inset: 0, background: "#000000", overflow: "hidden" }}>
         {pre}
       </div>
     );
