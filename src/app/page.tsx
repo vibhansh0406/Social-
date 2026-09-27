@@ -1,17 +1,41 @@
+"use client";
+
+import { useEffect } from "react";
 import GlyphPortal from "@/components/ui/glyph-portal";
 import AsciiBackground from "@/components/ui/ascii-background";
-import AnimatedNoise from "@/components/ui/animated-noise";
 import LivingGradient from "@/components/ui/living-gradient";
+import AnimatedNoise from "@/components/ui/animated-noise";
 import { Capabilities } from "@/components/sections/Capabilities";
 import { SelectedWork } from "@/components/sections/SelectedWork";
 import { Methodology } from "@/components/sections/Methodology";
 import { Initiate } from "@/components/sections/Initiate";
 
+function CaptionColorFixer() {
+  useEffect(() => {
+    const style = document.createElement("style");
+    style.textContent = `
+      [data-gp-caption],
+      [data-gp-hint],
+      [data-gp-enter] {
+        color: #1a1a1a !important;
+      }
+      [data-gp-enter]:focus-visible {
+        background: #f5efe6 !important;
+        color: #1a1a1a !important;
+      }
+    `;
+    document.head.appendChild(style);
+    return () => { document.head.removeChild(style); };
+  }, []);
+  return null;
+}
+
 export default function Home() {
   return (
-    <AnimatedNoise />
-      <LivingGradient>
+    <LivingGradient>
       <main className="relative min-h-screen">
+        <CaptionColorFixer />
+        <AnimatedNoise />
         <GlyphPortal
           word="VIBSOCIAL"
           enterLabel="Enter"
