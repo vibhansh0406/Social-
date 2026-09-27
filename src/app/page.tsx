@@ -1,5 +1,6 @@
 import GlyphPortal from "@/components/ui/glyph-portal";
 import AsciiBackground from "@/components/ui/ascii-background";
+import AnimatedNoise from "@/components/ui/animated-noise";
 import LivingGradient from "@/components/ui/living-gradient";
 import { Capabilities } from "@/components/sections/Capabilities";
 import { SelectedWork } from "@/components/sections/SelectedWork";
@@ -8,7 +9,8 @@ import { Initiate } from "@/components/sections/Initiate";
 
 export default function Home() {
   return (
-    <LivingGradient>
+    <AnimatedNoise />
+      <LivingGradient>
       <main className="relative min-h-screen">
         <GlyphPortal
           word="VIBSOCIAL"
