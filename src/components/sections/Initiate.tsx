@@ -32,12 +32,12 @@ export function Initiate() {
         transition={{ duration: 1 }}
         className="flex flex-col items-center text-center z-10 w-full"
       >
-        <h2 className="font-serif text-5xl sm:text-7xl md:text-9xl text-neutral-900 tracking-tighter leading-[0.9] mb-12">
+        <h2 className="font-serif text-5xl sm:text-7xl md:text-9xl text-white tracking-tighter leading-[0.9] mb-12">
           Let's build the <br />
-          <span className="italic text-neutral-500">future.</span>
+          <span className="italic text-white/50">future.</span>
         </h2>
 
-        <a href="mailto:vvibhansh@gmail.com" className="group relative inline-flex items-center gap-4 text-xl sm:text-2xl text-neutral-900 mb-20">
+        <a href="mailto:vvibhansh@gmail.com" className="group relative inline-flex items-center gap-4 text-xl sm:text-2xl text-white mb-20">
           <span className="relative z-10">Transmit Message</span>
           <ArrowUpRight className="w-6 h-6 group-hover:rotate-45 transition-transform duration-500" />
           <div className="absolute inset-x-0 bottom-0 border-b border-neutral-900/30 group-hover:border-neutral-900 transition-colors" />
@@ -45,7 +45,7 @@ export function Initiate() {
       </motion.div>
 
       {/* Deep Footer - Mobile Optimized */}
-      <footer className="mt-auto pt-12 border-t border-neutral-900/10 flex flex-col items-center gap-10 w-full">
+      <footer className="mt-auto pt-12 border-t border-white/10 flex flex-col items-center gap-10 w-full">
         
         {/* Socials */}
         <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
@@ -56,7 +56,7 @@ export function Initiate() {
               target="_blank" 
               rel="noopener noreferrer"
               whileHover={{ y: -3 }}
-              className="px-8 py-3 rounded-full bg-white/60 border border-neutral-900/10 backdrop-blur-md text-xs sm:text-sm uppercase tracking-widest text-neutral-800 hover:bg-neutral-900 hover:text-white hover:border-neutral-900 transition-all duration-300 shadow-sm"
+              className="px-8 py-3 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-xs sm:text-sm uppercase tracking-widest text-neutral-800 hover:bg-white hover:text-black hover:border-neutral-900 transition-all duration-300 shadow-sm"
             >
               {s.name}
             </motion.a>
@@ -65,11 +65,11 @@ export function Initiate() {
 
         {/* Time & Copyright - Centered Stack */}
         <div className="flex flex-col items-center gap-3 text-center">
-          <div className="flex items-center gap-3 text-neutral-500">
+          <div className="flex items-center gap-3 text-white/50">
             <span className="text-[10px] sm:text-xs uppercase tracking-widest">Local Time</span>
-            <span className="font-mono text-sm sm:text-base text-neutral-900">{time} IST</span>
+            <span className="font-mono text-sm sm:text-base text-white">{time} IST</span>
           </div>
-          <div className="text-[10px] text-neutral-400 uppercase tracking-widest mt-2">
+          <div className="text-[10px] text-white/40 uppercase tracking-widest mt-2">
             © 2024 VibSocial. Engineered by Vibhansh.
           </div>
         </div>

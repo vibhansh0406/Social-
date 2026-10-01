@@ -87,7 +87,7 @@ export function SelectedWork() {
       <section className="mx-auto max-w-7xl px-4 sm:px-6 py-20 sm:py-32 md:py-48">
         <motion.h2
           initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="font-serif text-4xl sm:text-5xl md:text-7xl mb-10 sm:mb-16 text-neutral-900"
+          className="font-serif text-4xl sm:text-5xl md:text-7xl mb-10 sm:mb-16 text-white"
         >
           Selected Work.
         </motion.h2>

@@ -1,72 +1,38 @@
 "use client";
 
-import { useEffect, useRef, type CSSProperties, useState } from "react";
-import { useGyroscope } from "@/hooks/useGyroscope";
+import { useEffect, useRef, type CSSProperties } from "react";
 
 const RAMP = " .,'`-_:;=+*<>()[]{}#%@";
 
 export type AsciiBackgroundProps = {
   src: string;
-  charSize?: number;
-  opacity?: number;
-  invert?: boolean;
   useImageColors?: boolean;
   className?: string;
 };
 
 export default function AsciiBackground({
   src,
-  charSize = 7,
-  opacity = 1,
-  invert = false,
   useImageColors = false,
   className,
 }: AsciiBackgroundProps) {
   const preRef = useRef<HTMLPreElement>(null);
-  const { orientation } = useGyroscope();
-  
-  const [isDesktop, setIsDesktop] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-  // Detect Desktop for Mouse Parallax
-  useEffect(() => {
-    const mq = window.matchMedia("(pointer: fine)");
-    setIsDesktop(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
-
-  // Mouse Parallax Logic
-  useEffect(() => {
-    if (!isDesktop) return;
-    const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 2; 
-      const y = (e.clientY / window.innerHeight - 0.5) * 2;
-      setMousePos({ x, y });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [isDesktop]);
-
-  // Generate ASCII Text
   useEffect(() => {
     const pre = preRef.current;
     if (!pre) return;
     let cancelled = false;
 
     const render = () => {
-      const width = pre.clientWidth;
-      const height = pre.clientHeight;
-      if (!width || !height) return;
-      
       const img = new Image();
       img.crossOrigin = "anonymous";
       img.onload = () => {
         if (cancelled) return;
-        const cellW = charSize * 0.6;
-        const cols = Math.max(40, Math.floor(width / cellW));
-        const rows = Math.max(24, Math.floor(height / charSize));
+        
+        // FIXED GRID: 120 columns, maintain aspect ratio
+        const cols = 120;
+        const aspectRatio = img.height / img.width;
+        // Monospace char aspect ratio is roughly 0.55
+        const rows = Math.round(cols * aspectRatio * 0.55);
         
         const canvas = document.createElement("canvas");
         canvas.width = cols;
@@ -74,11 +40,7 @@ export default function AsciiBackground({
         const ctx = canvas.getContext("2d", { willReadFrequently: true });
         if (!ctx) return;
         
-        const scale = Math.max(cols / img.width, rows / img.height);
-        const dw = img.width * scale;
-        const dh = img.height * scale;
-        ctx.drawImage(img, (cols - dw) / 2, (rows - dh) / 2, dw, dh);
-        
+        ctx.drawImage(img, 0, 0, cols, rows);
         const imgData = ctx.getImageData(0, 0, cols, rows);
         const data = imgData.data;
 
@@ -88,8 +50,7 @@ export default function AsciiBackground({
           for (let x = 0; x < cols; x++) {
             const i = (y * cols + x) * 4;
             const l = 0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2];
-            let v = l / 255;
-            if (invert) v = 1 - v;
+            const v = l / 255;
             line += RAMP[Math.round(v * (RAMP.length - 1))];
           }
           out += line + "\n";
@@ -101,53 +62,34 @@ export default function AsciiBackground({
     };
 
     render();
-    const ro = new ResizeObserver(() => render());
-    ro.observe(pre);
-    return () => { cancelled = true; ro.disconnect(); };
-  }, [src, charSize, invert]);
-
-  // Calculate Tilt (Mouse for Desktop, Gyro for Mobile)
-  // Multipliers kept low for subtle, premium feel
-  const tiltX = isDesktop ? mousePos.x * 12 : orientation.x * 1.2;
-  const tiltY = isDesktop ? mousePos.y * 12 : orientation.y * 1.2;
+    return () => { cancelled = true; };
+  }, [src]);
 
   const preStyle: CSSProperties = {
-    position: "absolute",
-    inset: 0,
     margin: 0,
-    opacity,
-    fontSize: charSize,
-    lineHeight: `${charSize}px`,
+    fontSize: "1.2vw", // Responsive font size
+    lineHeight: "1.2vw",
     letterSpacing: 0,
     fontFamily: '"SFMono-Regular", Menlo, Consolas, monospace',
     userSelect: "none",
     pointerEvents: "none",
     whiteSpace: "pre",
-    // Smooth Parallax Transform
-    transform: `translate3d(${tiltX}px, ${tiltY}px, 0)`,
-    transition: "transform 0.2s ease-out",
-    // CSS Filters for instant color pop (Better than canvas manipulation)
-    filter: "brightness(1.4) contrast(1.15) saturate(1.2)",
+    color: "transparent",
     ...(useImageColors
       ? {
-          color: "transparent",
           backgroundImage: `url(${src})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           WebkitBackgroundClip: "text",
           backgroundClip: "text",
+          filter: "brightness(1.3) contrast(1.2)",
         }
       : { color: "#ffffff" }),
   };
 
-  const pre = <pre ref={preRef} aria-hidden className={className} style={preStyle} />;
-
   return (
-    <div style={{ position: "absolute", inset: 0, background: "#050505", overflow: "hidden" }}>
-      {/* Scale up slightly to prevent edges showing during parallax */}
-      <div style={{ position: "absolute", inset: "-10%", transform: "scale(1.1)" }}>
-        {pre}
-      </div>
+    <div className="absolute inset-0 flex items-center justify-center bg-[#050505] overflow-hidden">
+      <pre ref={preRef} aria-hidden className={className} style={preStyle} />
     </div>
   );
 }

@@ -14,7 +14,7 @@ export function Capabilities() {
     <section className="mx-auto max-w-7xl px-4 sm:px-6 py-20 sm:py-32 md:py-48">
       <motion.h2 
         initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-        className="font-serif text-4xl sm:text-5xl md:text-7xl mb-10 sm:mb-16 text-neutral-900"
+        className="font-serif text-4xl sm:text-5xl md:text-7xl mb-10 sm:mb-16 text-white"
       >
         Capabilities.
       </motion.h2>
@@ -24,11 +24,11 @@ export function Capabilities() {
             key={cap.title}
             initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
             transition={{ duration: 0.8, delay: i * 0.1 }}
-            className="group p-6 sm:p-10 md:p-16 bg-white/40 backdrop-blur-md hover:bg-white/60 transition-colors duration-500 relative overflow-hidden"
+            className="group p-6 sm:p-10 md:p-16 bg-white/5 backdrop-blur-md hover:bg-white/10 transition-colors duration-500 relative overflow-hidden"
           >
-            <cap.icon className="w-8 h-8 sm:w-12 sm:h-12 text-neutral-600 group-hover:text-neutral-900 transition-colors duration-500 mb-4 sm:mb-8" />
-            <h3 className="text-xl sm:text-2xl md:text-3xl font-medium text-neutral-900 mb-2 sm:mb-4">{cap.title}</h3>
-            <p className="text-neutral-600 text-sm sm:text-lg leading-relaxed max-w-md">{cap.desc}</p>
+            <cap.icon className="w-8 h-8 sm:w-12 sm:h-12 text-white/70 group-hover:text-white transition-colors duration-500 mb-4 sm:mb-8" />
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-medium text-white mb-2 sm:mb-4">{cap.title}</h3>
+            <p className="text-white/70 text-sm sm:text-lg leading-relaxed max-w-md">{cap.desc}</p>
           </motion.div>
         ))}
       </div>
