@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import GlyphPortal from "@/components/ui/glyph-portal";
 import AsciiBackground from "@/components/ui/ascii-background";
-import LivingGradient from "@/components/ui/living-gradient";
+import NeuralField from "@/components/ui/neural-field";
 import AnimatedNoise from "@/components/ui/animated-noise";
 import SkillsMarquee from "@/components/ui/skills-marquee";
 import { Capabilities } from "@/components/sections/Capabilities";
@@ -15,8 +15,7 @@ function CaptionColorFixer() {
   useEffect(() => {
     const style = document.createElement("style");
     style.textContent = `
-      [data-gp-caption], [data-gp-hint], [data-gp-enter] { color: #1a1a1a !important; }
-      [data-gp-enter]:focus-visible { background: #f5efe6 !important; color: #1a1a1a !important; }
+      [data-gp-caption], [data-gp-hint], [data-gp-enter] { color: rgba(255,255,255,0.75) !important; }
     `;
     document.head.appendChild(style);
     return () => { document.head.removeChild(style); };
@@ -26,7 +25,7 @@ function CaptionColorFixer() {
 
 export default function Home() {
   return (
-    <LivingGradient>
+    <NeuralField>
       <main className="relative min-h-screen">
         <CaptionColorFixer />
         <AnimatedNoise />
@@ -65,6 +64,6 @@ export default function Home() {
         <Methodology />
         <Initiate />
       </main>
-    </LivingGradient>
+    </NeuralField>
   );
 }
